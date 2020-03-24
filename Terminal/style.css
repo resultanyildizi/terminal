@@ -1,0 +1,8 @@
+html, body {
+    margin: 20;
+    padding: 0;
+  }
+  canvas {
+    display: block;
+  }
+  
