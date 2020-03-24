@@ -4,6 +4,7 @@ class Resource {
         this.name = name;
         this.spriteSheets = [];
         this.spriteDatas = [];
+        this.shadow;
     }
 }
 // Defining the certain types of players and their animation types.
@@ -13,7 +14,7 @@ let clrArr  = ["Black", "Yellow", "Red", "Blue"];
 
 let currSheets = [];
 let currDatas  = [];
-
+let currShadow;
 // preload is a reserved function to upload the resources for the project, in advance.
 function preload() {
     for(let i = 0; i < clrArr.length; i++) {
@@ -30,21 +31,29 @@ function preload() {
         currDatas.push(spriteData);
     }
 
+    currShadow = loadImage("res/extras/Shadow.png");
+
     // console.log(currSheets);
     // console.log(currDatas); 
 }
 
+let resources = [];
 function loadResources() {
 
     resources = {"black": new Resource("black"), "yellow": new Resource("yellow"), "red": new Resource("yellow"), "blue": new Resource("blue")};
 
     let keys = Object.keys(resources);
+    console.log(currSheets[4]);
 
     for(let i = 0; i < keys.length; i++) {
         for(let j = 0; j < typeArr.length; j++) {
-            resources[keys[i]].spriteSheets.push(i * typeArr + j);
+
+            resources[keys[i]].spriteSheets.push(currSheets[i * typeArr.length + j]);
         }
         resources[keys[i]].spriteDatas = currDatas;
+        resources[keys[i]].shadow = currShadow;
     }
 }
+
+
 

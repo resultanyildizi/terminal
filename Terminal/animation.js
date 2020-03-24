@@ -2,14 +2,12 @@
 
 
 class Animation {
-    constructor(sheet, data, x, y) {
+    constructor(sheet, data, stopLast = false) {
         this.animation = [];
         this.spriteSheet = sheet;
         this.index = 0;
         this.spriteData = data;
-        
-        this.x = x;
-        this.y = y;
+        this.stopLast = stopLast;
 
         let frames = this.spriteData.frames;
 
@@ -18,19 +16,17 @@ class Animation {
             let img = this.spriteSheet.get(pos.x, pos.y, pos.w, pos.h);
             this.animation.push(img);
         }
-
-        console.log(this.animation[0]);
     }
 
-    play(speed = 0.2, scalar = 2, stopLast = false) {
+    play(x, y, speed = 0.2, scalar = 2) {
         let im;
-        if(stopLast && floor(this.index) == this.animation.length - 1) {
+        if(this.stopLast && floor(this.index) == this.animation.length - 1) {
             im = this.animation[this.animation.length - 1];
         } else {
             im = this.animation[floor(this.index) % this.animation.length];
             this.index += speed;
         }
-        image(im, this.x, this.y, im.width * scalar, im.height * scalar);
+        image(im, x, y, im.width * scalar, im.height * scalar);
         
     }
 

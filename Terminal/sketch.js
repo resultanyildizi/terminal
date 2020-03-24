@@ -1,13 +1,14 @@
-let resources = [];
-
-
-
+let player;
 
 function setup() {
-    createCanvas(900, 600);
-
+    createCanvas(1800, 600);
     loadResources();
-   
+    
+    let res = resources["yellow"];
+    
+    player = new Player("Resul", res, 100, 100);
+    player.setup();
+    
     console.log(resources);
 
 }
@@ -15,18 +16,10 @@ function setup() {
 function draw() {
     background(51);
 
+    player.update();
+    player.show();
 }
 
-function loadResources() {
 
-    resources = {"black": new Resource("black"), "yellow": new Resource("yellow"), "red": new Resource("yellow"), "blue": new Resource("blue")};
 
-    let keys = Object.keys(resources);
 
-    for(let i = 0; i < keys.length; i++) {
-        for(let j = 0; j < typeArr.length; j++) {
-            resources[keys[i]].spriteSheets.push(i * typeArr + j);
-        }
-        resources[keys[i]].spriteDatas = currDatas;
-    }
-}
