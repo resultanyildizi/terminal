@@ -22,7 +22,7 @@ class Animation {
         console.log(this.animation[0]);
     }
 
-    play(speed, scalar, stopLast = false) {
+    play(speed = 0.2, scalar = 2, stopLast = false) {
         let im;
         if(stopLast && floor(this.index) == this.animation.length - 1) {
             im = this.animation[this.animation.length - 1];

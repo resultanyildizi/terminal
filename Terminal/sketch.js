@@ -1,24 +1,32 @@
-let sprite;
-let spriteSheet;
-let spriteData;
+let resources = [];
 
 
 
-function preload() {
-    let type = "Death"; 
-    let color = "Blue";
-
-    spriteSheet = loadImage("res/character_sprites/" + color + "/Gunner_" + color + "_" + type +".png");
-    spriteData  = loadJSON("res/json_files/Character_" + type + ".json");
-}
 
 function setup() {
     createCanvas(900, 600);
-    animation = new Animation(spriteSheet, spriteData, 100, 100);
+
+    loadResources();
    
+    console.log(resources);
+
 }
 
 function draw() {
     background(51);
-    animation.play(0.2, 2, true);
+
+}
+
+function loadResources() {
+
+    resources = {"black": new Resource("black"), "yellow": new Resource("yellow"), "red": new Resource("yellow"), "blue": new Resource("blue")};
+
+    let keys = Object.keys(resources);
+
+    for(let i = 0; i < keys.length; i++) {
+        for(let j = 0; j < typeArr.length; j++) {
+            resources[keys[i]].spriteSheets.push(i * typeArr + j);
+        }
+        resources[keys[i]].spriteDatas = currDatas;
+    }
 }
