@@ -13,13 +13,14 @@ function setup() {
     player.setup();
 
     levelDesigner = new LevelDesigner("res/levels/level1.txt");
+    platforms = levelDesigner.platforms;
 }
 
 function draw() {
     background(51);
 
-    for(let i = 0; i < levelDesigner.platforms.length; i++) {
-        levelDesigner.platforms[i].show();
+    for(let i = 0; i < platforms.length; i++) {
+        platforms[i].show();
     }
 
     player.update();

@@ -16,7 +16,9 @@ let currSheets = [];
 let currDatas  = [];
 let currShadow;
 
-let platformSprite;
+let platformSprite1;
+let platformSprite2;
+
 // preload is a reserved function to upload the resources for the project, in advance.
 function preload() {
     for(let i = 0; i < clrArr.length; i++) {
@@ -34,7 +36,10 @@ function preload() {
     }
 
     currShadow = loadImage("res/extras/Shadow.png");
-    platformSprite = loadImage("res/extras/Platform.png");
+    platformSprite1 = loadImage("res/extras/Platform.png");
+    platformSprite2 = loadImage("res/extras/Platform2.png");
+
+    
 
 }
 
