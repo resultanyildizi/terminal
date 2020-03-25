@@ -3,11 +3,11 @@ class RigidBody {
         this.w = w;
         this.h = h;
 
+        
         this.mass = 1;
         this.friction = 1;
-        this.gravity = createVector(0, 0.3);
+        this.gravity = createVector(0, 0.5);
     }
-
     /*constructor(x, y, r) {
 
     }*/
@@ -19,6 +19,11 @@ class RigidBody {
         strokeWeight(2);
         stroke("GREEN");
         noFill();
-        rect(x, y, this.w, this.h);
+        
+        push();
+            translate(x, y);
+            rectMode(CENTER);
+            rect(0, 0, this.w, this.h);
+            pop();
     }
 }

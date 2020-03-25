@@ -18,7 +18,7 @@ class Animation {
         }
     }
 
-    play(x, y, speed = 0.2, scalar = 2) {
+    play(x, y, dir, speed = 0.2, scalar = 2) {
         let im;
         if(this.stopLast && floor(this.index) == this.animation.length - 1) {
             im = this.animation[this.animation.length - 1];
@@ -26,9 +26,15 @@ class Animation {
             im = this.animation[floor(this.index) % this.animation.length];
             this.index += speed;
         }
-        image(im, x, y, im.width * scalar, im.height * scalar);
-        
+
+        push();
+            translate(x,y); 
+            scale(dir, 1);
+            imageMode(CENTER);
+            image(im, 0, 0, im.width * scalar, im.height * scalar);
+        pop();
     }
+
 
 }
 

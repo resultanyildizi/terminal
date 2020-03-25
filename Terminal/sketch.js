@@ -1,10 +1,11 @@
 let player;
 
 function setup() {
-    createCanvas(1800, 600);
+    createCanvas(1800, 600 );
     loadResources();
     
     let res = resources["yellow"];
+
     
     player = new Player("Resul", res, 100, 100);
     player.setup();
@@ -18,6 +19,7 @@ function draw() {
 
     player.update();
     player.show();
+
 }
 
 
