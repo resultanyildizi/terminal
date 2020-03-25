@@ -3,7 +3,7 @@ class RigidBody {
         this.w = w;
         this.h = h;
 
-        
+
         this.mass = 1;
         this.friction = 1;
         this.gravity = createVector(0, 0.5);
@@ -23,7 +23,7 @@ class RigidBody {
         push();
             translate(x, y);
             rectMode(CENTER);
-            rect(0, 0, this.w, this.h);
+            //rect(0, 0, this.w, this.h);
             pop();
     }
 }

@@ -15,6 +15,8 @@ let clrArr  = ["Black", "Yellow", "Red", "Blue"];
 let currSheets = [];
 let currDatas  = [];
 let currShadow;
+
+let platformSprite;
 // preload is a reserved function to upload the resources for the project, in advance.
 function preload() {
     for(let i = 0; i < clrArr.length; i++) {
@@ -32,9 +34,8 @@ function preload() {
     }
 
     currShadow = loadImage("res/extras/Shadow.png");
+    platformSprite = loadImage("res/extras/Platform.png");
 
-    // console.log(currSheets);
-    // console.log(currDatas); 
 }
 
 let resources = [];
@@ -43,7 +44,6 @@ function loadResources() {
     resources = {"black": new Resource("black"), "yellow": new Resource("yellow"), "red": new Resource("yellow"), "blue": new Resource("blue")};
 
     let keys = Object.keys(resources);
-    console.log(currSheets[4]);
 
     for(let i = 0; i < keys.length; i++) {
         for(let j = 0; j < typeArr.length; j++) {

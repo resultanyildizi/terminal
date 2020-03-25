@@ -41,7 +41,22 @@ class Player {
     }
 
     show() {
-        image(this.resource.shadow, this.pos.x - 20, this.pos.y + 12, this.resource.shadow.width * 2, this.resource.shadow.height * 2); // shadow
+
+        let shadowx;
+        let shadowy;
+
+        if(this.direction == 1) {
+            shadowx = this.pos.x - 20;
+            shadowy = this.pos.y + 12;
+        }
+        else {
+            shadowx = this.pos.x - 12;
+            shadowy = this.pos.y + 12;
+        }
+        
+        
+        image(this.resource.shadow, shadowx, shadowy, this.resource.shadow.width * 2, this.resource.shadow.height * 2); // shadow
+        
         this.currentAnimation.play(this.pos.x, this.pos.y, this.direction, 0.2, 2); // player
         this.rigidBody.draw(this.pos.x, this.pos.y + this.rby);      // rigidbody
     }
@@ -51,7 +66,6 @@ class Player {
             this.currentAnimation = this.animations["idle"];
         }
         if(!(keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW))) {
-            console.log(keyCode);
             this.vel.set(0, this.vel.y);
         } if((keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW)) && !keyIsDown(DOWN_ARROW)) {
             this.move();
@@ -111,9 +125,6 @@ class Player {
                 this.vel.set(0, this.vel.y);
             }
         }
-
-
-        console.log(this.vel.x + " - " + this.vel.y);
     }
 
     jump() {
@@ -127,7 +138,6 @@ class Player {
             if(this.vel.x > 0)
                 this.vel.x -= 0.20; 
             if (this.vel.x < 0) {
-                console.log(this.vel.x);                
                 this.vel.x += 0.20;
             }
             if(this.vel.x <= 0.2 && this.vel.x >= -0.2)
