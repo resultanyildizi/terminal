@@ -15,7 +15,6 @@ class Player {
         
         this.speed = 7;
         this.direction = 1;
-        this.collides = false;
 
         this.health = 100.0;
         this.armor = 0.0;
@@ -72,9 +71,9 @@ class Player {
             this.rigidBody.vel.set(0, this.rigidBody.vel.y);
         } if((keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW)) && !keyIsDown(DOWN_ARROW)) {
             this.move();
-            if(this.collides)
+            if(this.rigidBody.collides)
                 this.currentAnimation = this.animations["run"];
-        } if(keyIsDown(UP_ARROW) && this.collides) {
+        } if(keyIsDown(UP_ARROW) && this.rigidBody.collides) {
             this.keyPressed();
         } if(keyIsDown(DOWN_ARROW)) {
             this.crouch();
@@ -108,6 +107,8 @@ class Player {
         this.collidesPlatforms();
 
         this.pos = this.rigidBody.pos;
+
+
         
     }
 
@@ -160,15 +161,12 @@ class Player {
 
 
     collidesPlatforms() {
-        for(let i = 0; i < platforms.length; i++) {
+        for(let i = 0; i < platforms.length; i++)
             if(this.rigidBody.collidesPlatform(platforms[i])) {
-                //this.pos.y = platforms[i].y + platforms[i].h / 2 - this.rigidBody.h / 2;
-
-                this.collides = true;
+                this.rigidBody.collides = true;
                 return;
-            } else
-                this.collides = false;
-        }
+            } else 
+                this.rigidBody.collides = false;
     }
 
     resourceToAnimations() {
