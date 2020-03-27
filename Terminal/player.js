@@ -25,8 +25,8 @@ class Player {
         this.sounds = [];
         
         this.pos = createVector(x, y);
-        this.vel = createVector(0, 0);
-        this.acc = createVector(0, 0);
+        
+       
 
         this.rigidBody;
         this.rbw = 10;
@@ -69,7 +69,7 @@ class Player {
             this.currentAnimation = this.animations["idle"];
         }
         if(!(keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW))) {
-            this.vel.set(0, this.vel.y);
+            this.rigidBody.vel.set(0, this.rigidBody.vel.y);
         } if((keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW)) && !keyIsDown(DOWN_ARROW)) {
             this.move();
             if(this.collides)
@@ -79,7 +79,7 @@ class Player {
         } if(keyIsDown(DOWN_ARROW)) {
             this.crouch();
             this.currentAnimation = this.animations["crouch"];
-            this.rigidBody.h = this.rbh - 20;
+            // this.rigidBody.h = this.rbh - 20;
         }else {
             this.rigidBody.h = this.rbh;
         } if(keyIsDown(SPACE)) {
@@ -91,11 +91,11 @@ class Player {
 
         
 
-        this.acc.add(this.rigidBody.gravity);
-        this.vel.add(this.acc);
-        this.pos.add(this.vel);
+        this.rigidBody.acc.add(this.rigidBody.gravity);
+        this.rigidBody.vel.add(this.rigidBody.acc);
+        this.rigidBody.pos.add(this.rigidBody.vel);
 
-        this.acc.set(0, 0);
+        this.rigidBody.acc.set(0, 0);
 
         /*
         if(this.pos.y > height / 2 + 5) {
@@ -106,9 +106,9 @@ class Player {
         
         
         this.collidesPlatforms();
-        console.log(this.collides);
 
-        this.rigidBody.pos = this.pos;
+        this.pos = this.rigidBody.pos;
+        
     }
 
     keyPressed() {
@@ -126,30 +126,30 @@ class Player {
         if(keyIsDown(LEFT_ARROW)) 
             this.direction = -1;
 
-        this.vel.set(this.speed * this.direction, this.vel.y);
+        this.rigidBody.vel.set(this.speed * this.direction, this.rigidBody.vel.y);
 
         function keyReleased() {
             if(keyCode == LEFT_ARROW || keyCode == RIGHT_ARROW) {
-                this.vel.set(0, this.vel.y);
+                this.rigidBody.vel.set(0, this.rigidBody.vel.y);
             }
         }
     }
 
     jump() {
         let jumpPower = -12.0;
-        this.acc.add(0, jumpPower);
+        this.rigidBody.acc.add(0, jumpPower);
     }
 
     crouch() {
         if(keyIsDown(DOWN_ARROW)) {
               
-            if(this.vel.x > 0)
-                this.vel.x -= 0.20; 
-            if (this.vel.x < 0) {
-                this.vel.x += 0.20;
+            if(this.rigidBody.vel.x > 0)
+                this.rigidBody.vel.x -= 0.20; 
+            if (this.rigidBody.vel.x < 0) {
+                this.rigidBody.vel.x += 0.20;
             }
-            if(this.vel.x <= 0.2 && this.vel.x >= -0.2)
-                this.vel.x = 0.0;
+            if(this.rigidBody.vel.x <= 0.2 && this.rigidBody.vel.x >= -0.2)
+                this.rigidBody.vel.x = 0.0;
             
         }   
     }
@@ -162,8 +162,8 @@ class Player {
     collidesPlatforms() {
         for(let i = 0; i < platforms.length; i++) {
             if(this.rigidBody.collidesPlatform(platforms[i])) {
-                this.pos.y = platforms[i].y + platforms[i].h / 2 - this.rigidBody.h / 2;
-                this.vel.set(this.vel.x, 0);
+                //this.pos.y = platforms[i].y + platforms[i].h / 2 - this.rigidBody.h / 2;
+
                 this.collides = true;
                 return;
             } else

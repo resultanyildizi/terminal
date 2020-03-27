@@ -9,7 +9,7 @@ function setup() {
     let res = resources["yellow"];
 
     
-    player = new Player("Resul", res, 100, 100);
+    player = new Player("Resul", res, 300, 100);
     player.setup();
 
     levelDesigner = new LevelDesigner("res/levels/level1.txt");
