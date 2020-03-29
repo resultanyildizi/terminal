@@ -1,0 +1,19 @@
+{
+  "name": "terminal",
+  "version": "1.0.0",
+  "description": "Terminal is a 2D multiplayer platformer action game created with p5js.",
+  "main": "animation.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "terminal",
+    "p5js",
+    "node"
+  ],
+  "author": "Nurettin Resul Tanyıldızı",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
