@@ -1,8 +1,13 @@
+var socket;
+
 let player;
 let platforms = [];
 let levelDesigner;
 
 function setup() {
+
+  socket = io.connect("http://localhost:3000");
+
   createCanvas(1600, 768);
   loadResources();
 
@@ -11,9 +16,10 @@ function setup() {
   player = new Player("Resul", res, 1400, 100);
   player.setup();
 
+  socket.emit("start", player);
+
   levelDesigner = new LevelDesigner("res/levels/level2.txt");
   platforms = levelDesigner.platforms;
-  console.log(platforms);
 }
 
 function draw() {
