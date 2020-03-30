@@ -1,17 +1,13 @@
 // defining animation enums
-const CROUCH = 0;
-const DEATH = 1;
-const IDLE = 2;
-const JUMP = 3;
-const RUN = 4;
 
 const SPACE = 32;
 const CRCH = 67;
 
 class Player {
-  constructor(name, resource, x, y) {
+  constructor(id, name, anims, _x, _y, color) {
+    this.id = id;
     this.name = name;
-    this.resource = resource;
+    this.color;
 
     this.speed = 7;
     this.direction = 1;
@@ -19,11 +15,11 @@ class Player {
     this.health = 100.0;
     this.armor = 0.0;
 
-    this.animations = [];
+    this.animations = anims;
     this.currentAnimation;
     this.sounds = [];
 
-    this.pos = createVector(x, y);
+    this.pos = { x: _x, y: _y };
 
     this.rigidBody;
     this.rbw = 10;
@@ -31,10 +27,12 @@ class Player {
     this.rby = 0;
     this.gun;
     this.UI;
+    this.shadow = loadImage("res/extras/Shadow.png");
+
+    this.setup();
   }
 
   setup() {
-    this.resourceToAnimations();
     this.rigidBody = new RigidBody(this.pos, this.rbw, this.rbh);
   }
 
@@ -51,11 +49,11 @@ class Player {
     }
 
     image(
-      this.resource.shadow,
+      this.shadow,
       shadowx,
       shadowy,
-      this.resource.shadow.width * 2,
-      this.resource.shadow.height * 2
+      this.shadow.width * 2,
+      this.shadow.height * 2
     ); // shadow
 
     this.currentAnimation.play(this.pos.x, this.pos.y, this.direction, 0.2, 2); // player
@@ -67,7 +65,7 @@ class Player {
       this.currentAnimation = this.animations["idle"];
     }
     if (!(keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW))) {
-      this.rigidBody.vel.set(0, this.rigidBody.vel.y);
+      this.rigidBody.vel.x = 0;
     }
     if (
       (keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW)) &&
@@ -92,11 +90,17 @@ class Player {
       this.currentAnimation = this.animations["death"];
     }
 
-    this.rigidBody.acc.add(this.rigidBody.gravity);
-    this.rigidBody.vel.add(this.rigidBody.acc);
-    this.rigidBody.pos.add(this.rigidBody.vel);
+    this.rigidBody.acc.y += this.rigidBody.gravity.y;
+    this.rigidBody.acc.x += this.rigidBody.gravity.x;
 
-    this.rigidBody.acc.set(0, 0);
+    this.rigidBody.vel.y += this.rigidBody.acc.y;
+    this.rigidBody.vel.x += this.rigidBody.acc.x;
+
+    this.rigidBody.pos.y += this.rigidBody.vel.y;
+    this.rigidBody.pos.x += this.rigidBody.vel.x;
+
+    this.rigidBody.acc.y = 0;
+    this.rigidBody.acc.x = 0;
 
     /*
         if(this.pos.y > height / 2 + 5) {
@@ -122,18 +126,18 @@ class Player {
 
     if (keyIsDown(LEFT_ARROW)) this.direction = -1;
 
-    this.rigidBody.vel.set(this.speed * this.direction, this.rigidBody.vel.y);
+    this.rigidBody.vel.x = this.speed * this.direction;
 
     function keyReleased() {
       if (keyCode == LEFT_ARROW || keyCode == RIGHT_ARROW) {
-        this.rigidBody.vel.set(0, this.rigidBody.vel.y);
+        this.rigidBody.vel.x = 0;
       }
     }
   }
 
   jump() {
     let jumpPower = -12.0;
-    this.rigidBody.acc.add(0, jumpPower);
+    this.rigidBody.acc.y += jumpPower;
   }
 
   crouch() {
@@ -164,25 +168,6 @@ class Player {
         this.rigidBody.collides = false;
       }*/
     return;
-  }
-
-  resourceToAnimations() {
-    let res = this.resource;
-    this.animations = {
-      crouch: new Animation(
-        res.spriteSheets[CROUCH],
-        res.spriteDatas[CROUCH],
-        true
-      ),
-      death: new Animation(
-        res.spriteSheets[DEATH],
-        res.spriteDatas[DEATH],
-        true
-      ),
-      idle: new Animation(res.spriteSheets[IDLE], res.spriteDatas[IDLE], false),
-      jump: new Animation(res.spriteSheets[JUMP], res.spriteDatas[JUMP], true),
-      run: new Animation(res.spriteSheets[RUN], res.spriteDatas[RUN], false)
-    };
   }
 }
 

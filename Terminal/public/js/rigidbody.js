@@ -6,9 +6,9 @@ class RigidBody {
     this.pos = pos;
     this.oldpos = pos;
 
-    this.vel = createVector(0, 0);
-    this.acc = createVector(0, 0);
-    this.gravity = createVector(0, 0.5);
+    this.vel = { x: 0, y: 0 };
+    this.acc = { x: 0, y: 0 };
+    this.gravity = { x: 0, y: 0.5 };
 
     this.collides = false;
 

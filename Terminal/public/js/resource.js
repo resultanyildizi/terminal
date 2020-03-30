@@ -1,10 +1,15 @@
+const CROUCH = 0;
+const DEATH = 1;
+const IDLE = 2;
+const JUMP = 3;
+const RUN = 4;
+
 // This is a class for holding sprite and json resources for animations of players.
 class Resource {
   constructor(name) {
     this.name = name;
     this.spriteSheets = [];
     this.spriteDatas = [];
-    this.shadow;
   }
 }
 // Defining the certain types of players and their animation types.
@@ -64,4 +69,21 @@ function loadResources() {
     resources[keys[i]].spriteDatas = currDatas;
     resources[keys[i]].shadow = currShadow;
   }
+}
+
+function resourceToAnimations(resource) {
+  let res = resource;
+  animations = {
+    crouch: new Animation(
+      res.spriteSheets[CROUCH],
+      res.spriteDatas[CROUCH],
+      true
+    ),
+    death: new Animation(res.spriteSheets[DEATH], res.spriteDatas[DEATH], true),
+    idle: new Animation(res.spriteSheets[IDLE], res.spriteDatas[IDLE], false),
+    jump: new Animation(res.spriteSheets[JUMP], res.spriteDatas[JUMP], true),
+    run: new Animation(res.spriteSheets[RUN], res.spriteDatas[RUN], false)
+  };
+
+  return animations;
 }
