@@ -23,14 +23,8 @@ function setup() {
   blackAnimations = resourceToAnimations(resources["black"]);
   blueAnimations = resourceToAnimations(resources["blue"]);
 
-  player = new Player(
-    socket.id,
-    "Resul",
-    yellowAnimations,
-    1400,
-    100,
-    "yellow"
-  );
+  player = new Player(0, "Resul", yellowAnimations, 1400, 100, "yellow");
+  players.push(player);
 
   let data = {
     id: player.id,
@@ -47,16 +41,16 @@ function setup() {
     rby: player.rby
   };
 
-  console.log(data);
-
   socket.emit("start", data);
 
   levelDesigner = new LevelDesigner("res/levels/level2.txt");
   platforms = levelDesigner.platforms;
 
   socket.on("heartbeat", function(data) {
-    // console.log(data.length);
     playersData = data;
+
+    if (players.length < playersData.length)
+      dataToPlayer(playersData[playersData.length - 1]);
   });
 }
 
@@ -70,11 +64,13 @@ function draw() {
   player.update();
   player.show();
 
-  dataToPlayers();
+  // dataToPlayers();
 
   for (let i = 0; i < players.length; i++) {
-    players[i].update();
-    players[i].show();
+    if (players[i].id != player.id) {
+      players[i].update();
+      players[i].show();
+    }
   }
 
   let data = {
@@ -95,25 +91,23 @@ function draw() {
   socket.emit("update", data);
 }
 
-function dataToPlayers() {
-  for (let i = 0; i < playersData.length; i++) {
-    if (playersData[i].id != player.id) {
-      let anims;
-      if (playersData[i].color == "yellow") anims = yellowAnimations;
-      else if (playersData[i].color == "red") anims = redAnimations;
-      else if (playersData[i].color == "black") anims = blackAnimations;
-      else if (playersData[i].color == "blue") anims = blueAnimations;
+function dataToPlayer(playerData) {
+  let anims;
 
-      let currPlayer = new Player(
-        playersData[i].id,
-        playersData[i].name,
-        anims,
-        playersData[i].pos.x,
-        playerData[i].pos.y,
-        playerData[i].color
-      );
+  if (playerData.color == "yellow") anims = yellowAnimations;
+  else if (playerData.color == "red") anims = redAnimations;
+  else if (playerData.color == "black") anims = blackAnimations;
+  else if (playerData.color == "blue") anims = blueAnimations;
+  else anims = yellowAnimations;
 
-      players.push(currPlayer);
-    }
-  }
+  let currPlayer = new Player(
+    playerData.id,
+    playerData.name,
+    anims,
+    playerData.pos.x,
+    playerData.pos.y,
+    playerData.color
+  );
+
+  players.push(currPlayer);
 }

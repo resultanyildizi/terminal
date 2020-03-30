@@ -7,7 +7,7 @@ class Player {
   constructor(id, name, anims, _x, _y, color) {
     this.id = id;
     this.name = name;
-    this.color;
+    this.color = color;
 
     this.speed = 7;
     this.direction = 1;
@@ -16,7 +16,7 @@ class Player {
     this.armor = 0.0;
 
     this.animations = anims;
-    this.currentAnimation;
+    this.currentAnimation = anims["idle"];
     this.sounds = [];
 
     this.pos = { x: _x, y: _y };
