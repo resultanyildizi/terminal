@@ -16,7 +16,7 @@ class Player {
     this.armor = 0.0;
 
     this.animations = anims;
-    this.currentAnimation = anims["idle"];
+    this.currentAnimation = "idle";
     this.sounds = [];
 
     this.pos = { x: _x, y: _y };
@@ -56,13 +56,19 @@ class Player {
       this.shadow.height * 2
     ); // shadow
 
-    this.currentAnimation.play(this.pos.x, this.pos.y, this.direction, 0.2, 2); // player
+    this.animations[this.currentAnimation].play(
+      this.pos.x,
+      this.pos.y,
+      this.direction,
+      0.2,
+      2
+    ); // player
     // this.rigidBody.draw(this.pos.x, this.pos.y + this.rby); // rigidbody
   }
 
   update() {
     if (!keyIsPressed) {
-      this.currentAnimation = this.animations["idle"];
+      this.currentAnimation = "idle";
     }
     if (!(keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW))) {
       this.rigidBody.vel.x = 0;
@@ -72,22 +78,21 @@ class Player {
       !keyIsDown(DOWN_ARROW)
     ) {
       this.move();
-      if (this.rigidBody.collides)
-        this.currentAnimation = this.animations["run"];
+      if (this.rigidBody.collides) this.currentAnimation = "run";
     }
     if (keyIsDown(UP_ARROW) && this.rigidBody.collides) {
       this.keyPressed();
     }
     if (keyIsDown(DOWN_ARROW)) {
       this.crouch();
-      this.currentAnimation = this.animations["crouch"];
+      this.currentAnimation = "crouch";
       // this.rigidBody.h = this.rbh - 20;
     } else {
       this.rigidBody.h = this.rbh;
     }
     if (keyIsDown(SPACE)) {
       this.die();
-      this.currentAnimation = this.animations["death"];
+      this.currentAnimation = "death";
     }
 
     this.rigidBody.acc.y += this.rigidBody.gravity.y;
@@ -116,7 +121,7 @@ class Player {
   keyPressed() {
     if (keyCode == UP_ARROW) {
       this.jump();
-      this.currentAnimation = this.animations["jump"];
+      this.currentAnimation = "jump";
       keyCode = 0;
     }
   }

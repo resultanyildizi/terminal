@@ -23,8 +23,18 @@ function setup() {
   blackAnimations = resourceToAnimations(resources["black"]);
   blueAnimations = resourceToAnimations(resources["blue"]);
 
-  player = new Player(0, "Resul", yellowAnimations, 1400, 100, "yellow");
+  player = new Player(
+    IDjson.id,
+    "Resul",
+    yellowAnimations,
+    1400,
+    100,
+    "yellow"
+  );
   players.push(player);
+
+  IDjson.id += 1;
+  save(IDjson, "res/levels/id.json");
 
   let data = {
     id: player.id,
@@ -32,6 +42,7 @@ function setup() {
     color: player.color,
     speed: player.speed,
     direction: player.direction,
+    currentAnimation: player.currentAnimation,
     health: player.health,
     armor: player.armor,
     pos: player.pos,
@@ -43,14 +54,24 @@ function setup() {
 
   socket.emit("start", data);
 
-  levelDesigner = new LevelDesigner("res/levels/level2.txt");
+  levelDesigner = new LevelDesigner("res/levels//level2.txt");
   platforms = levelDesigner.platforms;
 
   socket.on("heartbeat", function(data) {
     playersData = data;
 
-    if (players.length < playersData.length)
-      dataToPlayer(playersData[playersData.length - 1]);
+    if (players.length < playersData.length) {
+      players.push(dataToPlayer(playersData[playersData.length - 1]));
+      // console.log("came");
+    }
+
+    for (let i = 0; i < players.length; i++) {
+      if (playersData[i].id != player.id)
+        players[i] = dataToPlayer(playersData[i]);
+      // console.log(playersData[i].color);
+    }
+
+    // console.log(playersData.length + " -- " + players.length);
   });
 }
 
@@ -68,7 +89,7 @@ function draw() {
 
   for (let i = 0; i < players.length; i++) {
     if (players[i].id != player.id) {
-      players[i].update();
+      // players[i].update();
       players[i].show();
     }
   }
@@ -79,6 +100,7 @@ function draw() {
     color: player.color,
     speed: player.speed,
     direction: player.direction,
+    currentAnimation: player.currentAnimation,
     health: player.health,
     armor: player.armor,
     pos: player.pos,
@@ -98,7 +120,7 @@ function dataToPlayer(playerData) {
   else if (playerData.color == "red") anims = redAnimations;
   else if (playerData.color == "black") anims = blackAnimations;
   else if (playerData.color == "blue") anims = blueAnimations;
-  else anims = yellowAnimations;
+  else anims = redAnimations;
 
   let currPlayer = new Player(
     playerData.id,
@@ -109,5 +131,8 @@ function dataToPlayer(playerData) {
     playerData.color
   );
 
-  players.push(currPlayer);
+  currPlayer.currentAnimation = playerData.currentAnimation;
+  currPlayer.direction = playerData.direction;
+
+  return currPlayer;
 }

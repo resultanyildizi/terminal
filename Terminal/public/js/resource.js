@@ -23,6 +23,8 @@ let currShadow;
 let platformSprite1;
 let platformSprite2;
 
+let IDjson;
+
 // preload is a reserved function to upload the resources for the project, in advance.
 function preload() {
   for (let i = 0; i < clrArr.length; i++) {
@@ -49,6 +51,8 @@ function preload() {
   currShadow = loadImage("res/extras/Shadow.png");
   platformSprite1 = loadImage("res/extras/Platform.png");
   platformSprite2 = loadImage("res/extras/Platform2.png");
+
+  IDjson = loadJSON("res/levels/id.json");
 }
 
 let resources = [];
