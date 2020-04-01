@@ -16,7 +16,7 @@ let connecitonReady;
 function setup() {
   // Create a socket to local port 3000
   connecitonReady = false;
-  socket = io.connect("http://localhost:5000");
+  socket = io.connect();
   // Create the game canvas
   createCanvas(1600, 768);
 
