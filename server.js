@@ -26,12 +26,11 @@ function listen() {
 }
 
 app.use(express.static("public"));
-app.use(delay(1000));
 // WebSocket Portion
 // WebSockets work with the HTTP server
 var io = require("socket.io")(server);
 
-setInterval(heartbeat, 5);
+setInterval(heartbeat, 15);
 
 function heartbeat() {
   io.sockets.emit("heartbeat", players);
