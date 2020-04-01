@@ -44,16 +44,17 @@ function setup() {
   // Read other players datas
   socket.on("heartbeat", function(data) {
     playersData = data;
+    if (connecitonReady) {
+      if (players.length < playersData.length) {
+        players.push(dataToPlayer(playersData[playersData.length - 1]));
+      }
 
-    if (players.length < playersData.length) {
-      players.push(dataToPlayer(playersData[playersData.length - 1]));
-    }
-
-    for (let i = 0; i < players.length; i++) {
-      console.log(playersData[i]);
-      if (socket.id != undefined && playersData[i].id != undefined) {
-        if (playersData[i].id !== socket.id)
-          players[i] = dataToPlayer(playersData[i]);
+      for (let i = 0; i < players.length; i++) {
+        console.log(playersData[i]);
+        if (socket.id != undefined && playersData[i].id != undefined) {
+          if (playersData[i].id !== socket.id)
+            players[i] = dataToPlayer(playersData[i]);
+        }
       }
     }
   });
