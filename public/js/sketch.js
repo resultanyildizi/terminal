@@ -39,6 +39,7 @@ function setup() {
 
   socket.on("connect", function() {
     connecitonReady = true;
+    player.id = socket.id;
   });
   // Read other players datas
   socket.on("heartbeat", function(data) {
@@ -53,6 +54,12 @@ function setup() {
         if (playersData[i].id !== socket.id)
           players[i] = dataToPlayer(playersData[i]);
       }
+    }
+  });
+
+  socket.on("disconnect", function() {
+    for (let i = 0; i < players.length; i++) {
+      if (players[i].id == socket.id) players.splice(i, 1);
     }
   });
 }

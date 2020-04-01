@@ -75,6 +75,11 @@ io.sockets.on(
     });
 
     socket.on("disconnect", function() {
+      for (let i = 0; i < players.length; i++) {
+        if (socket.id == players[i].id) {
+          players.splice(i, 1);
+        }
+      }
       console.log("Client has disconnected");
     });
   }
