@@ -50,7 +50,6 @@ function setup() {
       }
 
       for (let i = 0; i < players.length; i++) {
-        console.log(playersData[i]);
         if (socket.id != undefined && playersData[i] != undefined) {
           if (playersData[i].id !== socket.id)
             players[i] = dataToPlayer(playersData[i]);
