@@ -81,5 +81,6 @@ io.sockets.on(
 );
 
 function setIntervalwithDelay(func, interval) {
+  for (let i = 0; i < 500000; i++);
   return setInterval(func, interval);
 }
