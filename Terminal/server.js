@@ -10,6 +10,7 @@ var players = [];
 
 // Using express: http://expressjs.com/
 var express = require("express");
+var delay = require("express-delay");
 // Create the app
 var app = express();
 
@@ -25,12 +26,12 @@ function listen() {
 }
 
 app.use(express.static("public"));
-
+app.use(delay(1000));
 // WebSocket Portion
 // WebSockets work with the HTTP server
 var io = require("socket.io")(server);
 
-setInterval(heartbeat, 20);
+var myInterval = setIntervalwithDelay(heartbeat, 40);
 
 function heartbeat() {
   io.sockets.emit("heartbeat", players);
@@ -45,27 +46,32 @@ io.sockets.on(
     console.log("We have a new client: " + socket.id);
 
     socket.on("start", function(player) {
+      player.id = socket.id;
       players.push(player);
     });
 
     socket.on("update", function(data) {
       let player;
-
-      console.log("server.js" + data.color);
       for (var i = 0; i < players.length; i++) {
-        if (data.id == players[i].id) {
+        if (socket.id == players[i].id) {
           player = players[i];
         }
       }
-      player.name = data.name;
-      player.color = data.color;
-      player.speed = data.speed;
-      player.direction = data.direction;
-      player.currentAnimation = data.currentAnimation;
-      player.health = data.health;
-      player.armor = data.armor;
-      player.pos = data.pos;
-      player.rigidBody = data.rigidBody;
+
+      if (player == null) {
+        console.log("player is null");
+        return;
+      } else {
+        player.name = data.name;
+        player.color = data.color;
+        player.speed = data.speed;
+        player.direction = data.direction;
+        player.currentAnimation = data.currentAnimation;
+        player.health = data.health;
+        player.armor = data.armor;
+        player.pos = data.pos;
+        player.rigidBody = data.rigidBody;
+      }
     });
 
     socket.on("disconnect", function() {
@@ -73,3 +79,7 @@ io.sockets.on(
     });
   }
 );
+
+function setIntervalwithDelay(func, interval) {
+  return setInterval(func, interval);
+}

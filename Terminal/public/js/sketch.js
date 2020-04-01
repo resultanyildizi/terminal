@@ -12,10 +12,11 @@ let redAnimations;
 let blackAnimations;
 let blueAnimations;
 
+let connecitonReady;
 function setup() {
   // Create a socket to local port 3000
+  connecitonReady = false;
   socket = io.connect("http://localhost:3000");
-
   // Create the game canvas
   createCanvas(1600, 768);
 
@@ -30,19 +31,15 @@ function setup() {
   createAnimations();
 
   // Create the current player
-  player = new Player(
-    IDjson.id,
-    "Resul",
-    yellowAnimations,
-    1400,
-    100,
-    "yellow"
-  );
+  player = new Player(0, "Resul", yellowAnimations, 1400, 100, "yellow");
   players.push(player);
 
   // Send the player data to the other clients
   socket.emit("start", player.playerToData());
 
+  socket.on("connect", function() {
+    connecitonReady = true;
+  });
   // Read other players datas
   socket.on("heartbeat", function(data) {
     playersData = data;
@@ -52,8 +49,10 @@ function setup() {
     }
 
     for (let i = 0; i < players.length; i++) {
-      if (playersData[i].id != player.id)
-        players[i] = dataToPlayer(playersData[i]);
+      if (connecitonReady == true) {
+        if (playersData[i].id !== socket.id)
+          players[i] = dataToPlayer(playersData[i]);
+      }
     }
   });
 }
@@ -72,8 +71,10 @@ function draw() {
 
   // Draw all other players except the current itself
   for (let i = 0; i < players.length; i++) {
-    if (players[i].id != player.id) {
-      players[i].show();
+    if (connecitonReady) {
+      if (players[i].id !== socket.id) {
+        players[i].show();
+      }
     }
   }
 
