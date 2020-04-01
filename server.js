@@ -31,7 +31,7 @@ app.use(delay(1000));
 // WebSockets work with the HTTP server
 var io = require("socket.io")(server);
 
-var myInterval = setIntervalwithDelay(heartbeat, 33);
+var myInterval = setIntervalwithDelay(heartbeat, 100);
 
 function heartbeat() {
   io.sockets.emit("heartbeat", players);
@@ -46,8 +46,10 @@ io.sockets.on(
     console.log("We have a new client: " + socket.id);
 
     socket.on("start", function(player) {
-      player.id = socket.id;
-      players.push(player);
+      if (players.length <= 2) {
+        player.id = socket.id;
+        players.push(player);
+      } else console.log("WE ARE SORRY");
     });
 
     socket.on("update", function(data) {
@@ -86,6 +88,5 @@ io.sockets.on(
 );
 
 function setIntervalwithDelay(func, interval) {
-  for (let i = 0; i < 500000; i++);
   return setInterval(func, interval);
 }
