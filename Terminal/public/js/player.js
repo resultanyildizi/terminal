@@ -164,15 +164,27 @@ class Player {
       this.rigidBody.collides |=
         this.rigidBody.collidesPlatform(platforms[i]) ||
         this.rigidBody.collides;
-
-    /*for (let i = 0; i < platforms.length; i++)
-      if (this.rigidBody.collidesPlatform(platforms[i])) {
-        this.rigidBody.collides = true;
-        return;
-      } else {
-        this.rigidBody.collides = false;
-      }*/
     return;
+  }
+
+  playerToData() {
+    let data = {
+      id: this.id,
+      name: this.name,
+      color: this.color,
+      speed: this.speed,
+      direction: this.direction,
+      currentAnimation: this.currentAnimation,
+      health: this.health,
+      armor: this.armor,
+      pos: this.pos,
+      rigidBody: this.rigidBody,
+      rbw: this.rbw,
+      rbh: this.rbh,
+      rby: this.rby
+    };
+
+    return data;
   }
 }
 
@@ -180,4 +192,28 @@ function _keyIsPressed(key) {
   function keyPressed() {
     return key == keyCode;
   }
+}
+
+function dataToPlayer(playerData) {
+  let anims;
+
+  if (playerData.color == "yellow") anims = yellowAnimations;
+  else if (playerData.color == "red") anims = redAnimations;
+  else if (playerData.color == "black") anims = blackAnimations;
+  else if (playerData.color == "blue") anims = blueAnimations;
+  else anims = redAnimations;
+
+  let currPlayer = new Player(
+    playerData.id,
+    playerData.name,
+    anims,
+    playerData.pos.x,
+    playerData.pos.y,
+    playerData.color
+  );
+
+  currPlayer.currentAnimation = playerData.currentAnimation;
+  currPlayer.direction = playerData.direction;
+
+  return currPlayer;
 }

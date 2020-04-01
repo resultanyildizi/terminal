@@ -13,16 +13,23 @@ let blackAnimations;
 let blueAnimations;
 
 function setup() {
+  // Create a socket to local port 3000
   socket = io.connect("http://localhost:3000");
 
+  // Create the game canvas
   createCanvas(1600, 768);
+
+  // Load the resources that game need
   loadResources();
 
-  yellowAnimations = resourceToAnimations(resources["yellow"]);
-  redAnimations = resourceToAnimations(resources["red"]);
-  blackAnimations = resourceToAnimations(resources["black"]);
-  blueAnimations = resourceToAnimations(resources["blue"]);
+  // Create the level
+  levelDesigner = new LevelDesigner("res/levels//level2.txt");
+  platforms = levelDesigner.platforms;
 
+  // Create the animations which players need
+  createAnimations();
+
+  // Create the current player
   player = new Player(
     IDjson.id,
     "Resul",
@@ -33,106 +40,50 @@ function setup() {
   );
   players.push(player);
 
-  IDjson.id += 1;
-  save(IDjson, "res/levels/id.json");
+  // Send the player data to the other clients
+  socket.emit("start", player.playerToData());
 
-  let data = {
-    id: player.id,
-    name: player.name,
-    color: player.color,
-    speed: player.speed,
-    direction: player.direction,
-    currentAnimation: player.currentAnimation,
-    health: player.health,
-    armor: player.armor,
-    pos: player.pos,
-    rigidBody: player.rigidBody,
-    rbw: player.rbw,
-    rbh: player.rbh,
-    rby: player.rby
-  };
-
-  socket.emit("start", data);
-
-  levelDesigner = new LevelDesigner("res/levels//level2.txt");
-  platforms = levelDesigner.platforms;
-
+  // Read other players datas
   socket.on("heartbeat", function(data) {
     playersData = data;
 
     if (players.length < playersData.length) {
       players.push(dataToPlayer(playersData[playersData.length - 1]));
-      // console.log("came");
     }
 
     for (let i = 0; i < players.length; i++) {
       if (playersData[i].id != player.id)
         players[i] = dataToPlayer(playersData[i]);
-      // console.log(playersData[i].color);
     }
-
-    // console.log(playersData.length + " -- " + players.length);
   });
 }
 
 function draw() {
   background(51);
 
+  // Draw the platforms
   for (let i = 0; i < platforms.length; i++) {
     platforms[i].show();
   }
 
+  // Update and draw the current player
   player.update();
   player.show();
 
-  // dataToPlayers();
-
+  // Draw all other players except the current itself
   for (let i = 0; i < players.length; i++) {
     if (players[i].id != player.id) {
-      // players[i].update();
       players[i].show();
     }
   }
 
-  let data = {
-    id: player.id,
-    name: player.name,
-    color: player.color,
-    speed: player.speed,
-    direction: player.direction,
-    currentAnimation: player.currentAnimation,
-    health: player.health,
-    armor: player.armor,
-    pos: player.pos,
-    rigidBody: player.rigidBody,
-    rbw: player.rbw,
-    rbh: player.rbh,
-    rby: player.rby
-  };
-
-  socket.emit("update", data);
+  // Send current player's updated datas to the other clients
+  socket.emit("update", player.playerToData());
 }
 
-function dataToPlayer(playerData) {
-  let anims;
-
-  if (playerData.color == "yellow") anims = yellowAnimations;
-  else if (playerData.color == "red") anims = redAnimations;
-  else if (playerData.color == "black") anims = blackAnimations;
-  else if (playerData.color == "blue") anims = blueAnimations;
-  else anims = redAnimations;
-
-  let currPlayer = new Player(
-    playerData.id,
-    playerData.name,
-    anims,
-    playerData.pos.x,
-    playerData.pos.y,
-    playerData.color
-  );
-
-  currPlayer.currentAnimation = playerData.currentAnimation;
-  currPlayer.direction = playerData.direction;
-
-  return currPlayer;
+function createAnimations() {
+  yellowAnimations = resourceToAnimations(resources["yellow"]);
+  redAnimations = resourceToAnimations(resources["red"]);
+  blackAnimations = resourceToAnimations(resources["black"]);
+  blueAnimations = resourceToAnimations(resources["blue"]);
 }
