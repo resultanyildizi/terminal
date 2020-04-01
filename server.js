@@ -31,7 +31,7 @@ app.use(delay(1000));
 // WebSockets work with the HTTP server
 var io = require("socket.io")(server);
 
-var myInterval = setIntervalwithDelay(heartbeat, 200);
+var myInterval = setIntervalwithDelay(heartbeat, 50);
 
 function heartbeat() {
   io.sockets.emit("heartbeat", players);
