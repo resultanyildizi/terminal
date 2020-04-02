@@ -27,7 +27,7 @@ class Player {
     this.rby = 0;
     this.gun;
     this.UI;
-    this.shadow = loadImage("res/extras/Shadow.png");
+    this.shadow = currShadow;
 
     this.setup();
   }
@@ -69,6 +69,8 @@ class Player {
   update() {
     if (!keyIsPressed) {
       this.currentAnimation = "idle";
+    } else {
+      // Send current player's updated datas to the other clients
     }
     if (!(keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW))) {
       this.rigidBody.vel.x = 0;

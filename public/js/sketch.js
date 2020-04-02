@@ -43,6 +43,7 @@ function setup() {
   });
   // Read other players datas
   socket.on("heartbeat", function(data) {
+    socket.emit("update", player.playerToData());
     playersData = data;
     if (connecitonReady) {
       if (players.length < playersData.length) {
@@ -85,9 +86,6 @@ function draw() {
       }
     }
   }
-
-  // Send current player's updated datas to the other clients
-  socket.emit("update", player.playerToData());
 }
 
 function createAnimations() {
