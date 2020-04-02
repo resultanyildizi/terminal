@@ -54,20 +54,17 @@ io.sockets.on(
       for (var i = 0; i < players.length; i++) {
         if (socket.id == players[i].id) {
           player = players[i];
-        }
-      }
 
-      if (player == null) {
-        console.log("player is null");
-        return;
-      } else {
-        player.name = data.name;
-        player.color = data.color;
-        player.direction = data.direction;
-        player.currentAnimation = data.currentAnimation;
-        player.health = data.health;
-        player.armor = data.armor;
-        player.pos = data.pos;
+          player.name = data.name;
+          player.color = data.color;
+          player.direction = data.direction;
+          player.currentAnimation = data.currentAnimation;
+          player.health = data.health;
+          player.armor = data.armor;
+          player.pos = data.pos;
+
+          players[i] = player;
+        }
       }
     });
 
