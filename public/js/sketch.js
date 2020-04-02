@@ -74,10 +74,6 @@ function draw() {
     platforms[i].show();
   }
 
-  // Update and draw the current player
-  player.update();
-  player.show();
-
   // Draw all other players except the current itself
   for (let i = 0; i < players.length; i++) {
     if (connecitonReady) {
@@ -86,6 +82,10 @@ function draw() {
       }
     }
   }
+
+  // Update and draw the current player
+  player.update();
+  player.show();
 }
 
 function createAnimations() {
