@@ -4,7 +4,7 @@ const SPACE = 32;
 const CRCH = 67;
 
 class Player {
-  constructor(id, name, anims, _x, _y, color) {
+  constructor(id, name, _x, _y, color) {
     this.id = id;
     this.name = name;
     this.color = color;
@@ -15,7 +15,7 @@ class Player {
     this.health = 100.0;
     this.armor = 0.0;
 
-    this.animations = anims;
+    this.animations = allAnimations[this.color];
     this.currentAnimation = "idle";
     this.sounds = [];
 
@@ -174,16 +174,11 @@ class Player {
       id: this.id,
       name: this.name,
       color: this.color,
-      speed: this.speed,
       direction: this.direction,
       currentAnimation: this.currentAnimation,
       health: this.health,
       armor: this.armor,
-      pos: this.pos,
-      rigidBody: this.rigidBody,
-      rbw: this.rbw,
-      rbh: this.rbh,
-      rby: this.rby
+      pos: this.pos
     };
 
     return data;
@@ -197,18 +192,9 @@ function _keyIsPressed(key) {
 }
 
 function dataToPlayer(playerData) {
-  let anims;
-
-  if (playerData.color == "yellow") anims = yellowAnimations;
-  else if (playerData.color == "red") anims = redAnimations;
-  else if (playerData.color == "black") anims = blackAnimations;
-  else if (playerData.color == "blue") anims = blueAnimations;
-  else anims = redAnimations;
-
   let currPlayer = new Player(
     playerData.id,
     playerData.name,
-    anims,
     playerData.pos.x,
     playerData.pos.y,
     playerData.color

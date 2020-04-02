@@ -63,13 +63,11 @@ io.sockets.on(
       } else {
         player.name = data.name;
         player.color = data.color;
-        player.speed = data.speed;
         player.direction = data.direction;
         player.currentAnimation = data.currentAnimation;
         player.health = data.health;
         player.armor = data.armor;
         player.pos = data.pos;
-        player.rigidBody = data.rigidBody;
       }
     });
 

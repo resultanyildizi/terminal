@@ -12,6 +12,7 @@ let redAnimations;
 let blackAnimations;
 let blueAnimations;
 
+let allAnimations = {};
 let connecitonReady;
 function setup() {
   // Create a socket to local port 3000
@@ -31,7 +32,7 @@ function setup() {
   createAnimations();
 
   // Create the current player
-  player = new Player(0, "Resul", yellowAnimations, 1400, 100, "yellow");
+  player = new Player(0, "Resul", 1400, 100, "yellow");
   players.push(player);
 
   // Send the player data to the other clients
@@ -93,4 +94,11 @@ function createAnimations() {
   redAnimations = resourceToAnimations(resources["red"]);
   blackAnimations = resourceToAnimations(resources["black"]);
   blueAnimations = resourceToAnimations(resources["blue"]);
+
+  allAnimations = {
+    yellow: yellowAnimations,
+    red: redAnimations,
+    black: blackAnimations,
+    blue: blueAnimations
+  };
 }
