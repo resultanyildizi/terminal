@@ -3,5 +3,5 @@
 # Some Folders #
 # ============ #
  
-/[Nn]ode_modules/
-/.vscode/
+node_modules/
+.vscode/
