@@ -52,12 +52,6 @@ function setup() {
       players[i].__proto__ = Player.prototype;
     }
   });
-
-  socket.on("disconnect", function () {
-    for (let i = 0; i < players.length; i++) {
-      if (players[i].id == socket.id) players.splice(i, 1);
-    }
-  });
 }
 
 function draw() {
@@ -70,12 +64,14 @@ function draw() {
 
   // Draw all other players except the current itself
   for (let i = 0; i < players.length; i++) {
-    players[i].show();
+    if (players[i].id !== socket.id) {
+      players[i].show();
+    }
   }
 
   // Update and draw the current player
   player.update();
-  //player.show();
+  player.show();
 
   socket.emit("update", player);
 }
