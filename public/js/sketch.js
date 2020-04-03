@@ -70,14 +70,12 @@ function draw() {
 
   // Draw all other players except the current itself
   for (let i = 0; i < players.length; i++) {
-    if (players[i].id !== socket.id) {
-      players[i].show();
-    }
+    players[i].show();
   }
 
   // Update and draw the current player
   player.update();
-  player.show();
+  //player.show();
 
   socket.emit("update", player);
 }
