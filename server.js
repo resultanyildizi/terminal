@@ -45,15 +45,7 @@ io.sockets.on(
     console.log("We have a new client: " + socket.id);
 
     socket.on("start", function (data) {
-      /*let player = new Player(
-        socket.id,
-        data.name,
-        data.pos.x,
-        data.pos.y,
-        data.color
-      );*/
       players.push(data);
-      console.log(data);
     });
 
     socket.on("update", function (data) {
@@ -74,37 +66,3 @@ io.sockets.on(
     });
   }
 );
-
-/*class Player {
-  constructor(id, name, _x, _y, color) {
-    this.id = id;
-    this.name = name;
-    this.color = color;
-
-    this.speed = 7;
-    this.direction = 1;
-
-    this.health = 100.0;
-    this.armor = 0.0;
-
-    this.currentAnimation = "idle";
-    this.pos = { x: _x, y: _y };
-
-    this.rigidBody;
-    this.gun;
-    this.UI;
-  }
-
-  setup() {}
-  update() {}
-  move() {}
-  walk() {}
-  show() {}
-  keyPressed() {}
-  jump() {}
-  crouch() {}
-  die() {}
-  collidesPlatforms() {}
-  playerToData() {}
-}
-*/
