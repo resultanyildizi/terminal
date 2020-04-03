@@ -13,6 +13,8 @@ let blueAnimations;
 
 let allAnimations = {};
 
+let playersData;
+
 function setup() {
   // Create a socket to local port 3000
   connecitonReady = false;
@@ -32,22 +34,24 @@ function setup() {
 
   // Create the current player
   player = new Player(0, "Resul", 1400, 100, "yellow");
+  player.setup();
 
   // Send the player data to the other clients
-  socket.emit("start", player.playerToData());
+  socket.emit("start", player);
 
+  // Set the player's id when connection is ready
   socket.on("connect", function () {
     player.id = socket.id;
   });
 
   // Read other players datas
   socket.on("heartbeat", function (data) {
-    socket.emit("update", player.playerToData());
+    socket.emit("update", player);
+
+    players = data;
 
     for (let i = 0; i < data.length; i++) {
-      if (socket.id != undefined && data[i] != undefined) {
-        players[i] = dataToPlayer(data[i]);
-      }
+      players[i].__proto__ = Player.prototype;
     }
   });
 

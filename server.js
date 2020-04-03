@@ -30,7 +30,7 @@ app.use(express.static("public"));
 // WebSockets work with the HTTP server
 var io = require("socket.io")(server);
 
-setInterval(heartbeat, 20);
+setInterval(heartbeat, 10);
 
 function heartbeat() {
   io.sockets.emit("heartbeat", players);
@@ -44,26 +44,22 @@ io.sockets.on(
   function (socket) {
     console.log("We have a new client: " + socket.id);
 
-    socket.on("start", function (player) {
-      player.id = socket.id;
-      players.push(player);
+    socket.on("start", function (data) {
+      /*let player = new Player(
+        socket.id,
+        data.name,
+        data.pos.x,
+        data.pos.y,
+        data.color
+      );*/
+      players.push(data);
+      console.log(data);
     });
 
     socket.on("update", function (data) {
-      let player;
       for (var i = 0; i < players.length; i++) {
         if (socket.id == players[i].id) {
-          player = players[i];
-
-          player.name = data.name;
-          player.color = data.color;
-          player.direction = data.direction;
-          player.currentAnimation = data.currentAnimation;
-          player.health = data.health;
-          player.armor = data.armor;
-          player.pos = data.pos;
-
-          players[i] = player;
+          players[i] = data;
         }
       }
     });
@@ -78,3 +74,37 @@ io.sockets.on(
     });
   }
 );
+
+/*class Player {
+  constructor(id, name, _x, _y, color) {
+    this.id = id;
+    this.name = name;
+    this.color = color;
+
+    this.speed = 7;
+    this.direction = 1;
+
+    this.health = 100.0;
+    this.armor = 0.0;
+
+    this.currentAnimation = "idle";
+    this.pos = { x: _x, y: _y };
+
+    this.rigidBody;
+    this.gun;
+    this.UI;
+  }
+
+  setup() {}
+  update() {}
+  move() {}
+  walk() {}
+  show() {}
+  keyPressed() {}
+  jump() {}
+  crouch() {}
+  die() {}
+  collidesPlatforms() {}
+  playerToData() {}
+}
+*/

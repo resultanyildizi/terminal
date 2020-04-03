@@ -15,25 +15,17 @@ class Player {
     this.health = 100.0;
     this.armor = 0.0;
 
-    this.animations = allAnimations[this.color];
     this.currentAnimation = "idle";
-    this.sounds = [];
 
     this.pos = { x: _x, y: _y };
 
     this.rigidBody;
-    this.rbw = 10;
-    this.rbh = 60;
-    this.rby = 0;
     this.gun;
     this.UI;
-    this.shadow = currShadow;
-
-    this.setup();
   }
 
   setup() {
-    this.rigidBody = new RigidBody(this.pos, this.rbw, this.rbh);
+    this.rigidBody = new RigidBody(this.pos, 10, 60);
   }
 
   show() {
@@ -49,21 +41,20 @@ class Player {
     }
 
     image(
-      this.shadow,
+      currShadow,
       shadowx,
       shadowy,
-      this.shadow.width * 2,
-      this.shadow.height * 2
+      currShadow.width * 2,
+      currShadow.height * 2
     ); // shadow
 
-    this.animations[this.currentAnimation].play(
+    allAnimations[this.color][this.currentAnimation].play(
       this.pos.x,
       this.pos.y,
       this.direction,
       0.2,
       2
     ); // player
-    // this.rigidBody.draw(this.pos.x, this.pos.y + this.rby); // rigidbody
   }
 
   update() {
@@ -118,7 +109,7 @@ class Player {
       this.currentAnimation = "crouch";
       // this.rigidBody.h = this.rbh - 20;
     } else {
-      this.rigidBody.h = this.rbh;
+      this.rigidBody.h = 60;
     }
     if (keyIsDown(SPACE)) {
       this.die();
@@ -177,6 +168,7 @@ class Player {
       health: this.health,
       armor: this.armor,
       pos: this.pos,
+      rigidBody: this.rigidBody,
     };
 
     return data;
