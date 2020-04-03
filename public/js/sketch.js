@@ -46,8 +46,6 @@ function setup() {
 
   // Read other players datas
   socket.on("heartbeat", function (data) {
-    socket.emit("update", player);
-
     players = data;
 
     for (let i = 0; i < data.length; i++) {
@@ -80,6 +78,8 @@ function draw() {
   // Update and draw the current player
   player.update();
   player.show();
+
+  socket.emit("update", player);
 }
 
 function createAnimations() {
