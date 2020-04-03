@@ -30,7 +30,7 @@ app.use(express.static("public"));
 // WebSockets work with the HTTP server
 var io = require("socket.io")(server);
 
-setInterval(heartbeat, 5);
+setInterval(heartbeat, 20);
 
 function heartbeat() {
   io.sockets.emit("heartbeat", players);
@@ -41,15 +41,15 @@ function heartbeat() {
 io.sockets.on(
   "connection",
   // We are given a websocket object in our function
-  function(socket) {
+  function (socket) {
     console.log("We have a new client: " + socket.id);
 
-    socket.on("start", function(player) {
+    socket.on("start", function (player) {
       player.id = socket.id;
       players.push(player);
     });
 
-    socket.on("update", function(data) {
+    socket.on("update", function (data) {
       let player;
       for (var i = 0; i < players.length; i++) {
         if (socket.id == players[i].id) {
@@ -68,7 +68,7 @@ io.sockets.on(
       }
     });
 
-    socket.on("disconnect", function() {
+    socket.on("disconnect", function () {
       for (let i = 0; i < players.length; i++) {
         if (socket.id == players[i].id) {
           players.splice(i, 1);

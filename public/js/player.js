@@ -67,6 +67,34 @@ class Player {
   }
 
   update() {
+    this.move();
+
+    this.rigidBody.acc.y += this.rigidBody.gravity.y;
+    this.rigidBody.acc.x += this.rigidBody.gravity.x;
+
+    this.rigidBody.vel.y += this.rigidBody.acc.y;
+    this.rigidBody.vel.x += this.rigidBody.acc.x;
+
+    this.rigidBody.pos.y += this.rigidBody.vel.y;
+    this.rigidBody.pos.x += this.rigidBody.vel.x;
+
+    this.rigidBody.acc.y = 0;
+    this.rigidBody.acc.x = 0;
+
+    this.collidesPlatforms();
+
+    this.pos = this.rigidBody.pos;
+  }
+
+  keyPressed() {
+    if (keyCode == UP_ARROW) {
+      this.jump();
+      this.currentAnimation = "jump";
+      keyCode = 0;
+    }
+  }
+
+  move() {
     if (!keyIsPressed) {
       this.currentAnimation = "idle";
     } else {
@@ -79,7 +107,7 @@ class Player {
       (keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW)) &&
       !keyIsDown(DOWN_ARROW)
     ) {
-      this.move();
+      this.walk();
       if (this.rigidBody.collides) this.currentAnimation = "run";
     }
     if (keyIsDown(UP_ARROW) && this.rigidBody.collides) {
@@ -96,39 +124,9 @@ class Player {
       this.die();
       this.currentAnimation = "death";
     }
-
-    this.rigidBody.acc.y += this.rigidBody.gravity.y;
-    this.rigidBody.acc.x += this.rigidBody.gravity.x;
-
-    this.rigidBody.vel.y += this.rigidBody.acc.y;
-    this.rigidBody.vel.x += this.rigidBody.acc.x;
-
-    this.rigidBody.pos.y += this.rigidBody.vel.y;
-    this.rigidBody.pos.x += this.rigidBody.vel.x;
-
-    this.rigidBody.acc.y = 0;
-    this.rigidBody.acc.x = 0;
-
-    /*
-        if(this.pos.y > height / 2 + 5) {
-            this.pos.y = height / 2 + 5;
-            this.vel.set(this.vel.x, 0);
-        }*/
-
-    this.collidesPlatforms();
-
-    this.pos = this.rigidBody.pos;
   }
 
-  keyPressed() {
-    if (keyCode == UP_ARROW) {
-      this.jump();
-      this.currentAnimation = "jump";
-      keyCode = 0;
-    }
-  }
-
-  move() {
+  walk() {
     if (keyIsDown(RIGHT_ARROW)) this.direction = 1;
 
     if (keyIsDown(LEFT_ARROW)) this.direction = -1;
@@ -178,16 +176,10 @@ class Player {
       currentAnimation: this.currentAnimation,
       health: this.health,
       armor: this.armor,
-      pos: this.pos
+      pos: this.pos,
     };
 
     return data;
-  }
-}
-
-function _keyIsPressed(key) {
-  function keyPressed() {
-    return key == keyCode;
   }
 }
 

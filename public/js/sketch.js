@@ -1,7 +1,6 @@
 var socket;
 
 let player;
-let playersData = [];
 let players = [];
 
 let platforms = [];
@@ -13,7 +12,7 @@ let blackAnimations;
 let blueAnimations;
 
 let allAnimations = {};
-let connecitonReady;
+
 function setup() {
   // Create a socket to local port 3000
   connecitonReady = false;
@@ -33,35 +32,26 @@ function setup() {
 
   // Create the current player
   player = new Player(0, "Resul", 1400, 100, "yellow");
-  players.push(player);
 
   // Send the player data to the other clients
   socket.emit("start", player.playerToData());
 
-  socket.on("connect", function() {
-    connecitonReady = true;
+  socket.on("connect", function () {
     player.id = socket.id;
   });
-  // Read other players datas
-  socket.on("heartbeat", function(data) {
-    socket.emit("update", player.playerToData());
-    playersData = data;
-    if (connecitonReady) {
-      if (players.length < playersData.length) {
-        players.push(dataToPlayer(playersData[playersData.length - 1]));
-      }
 
-      for (let i = 0; i < players.length; i++) {
-        if (socket.id != undefined && playersData[i] != undefined) {
-          if (playersData[i].id !== socket.id) {
-            players[i] = dataToPlayer(playersData[i]);
-          }
-        }
+  // Read other players datas
+  socket.on("heartbeat", function (data) {
+    socket.emit("update", player.playerToData());
+
+    for (let i = 0; i < data.length; i++) {
+      if (socket.id != undefined && data[i] != undefined) {
+        players[i] = dataToPlayer(data[i]);
       }
     }
   });
 
-  socket.on("disconnect", function() {
+  socket.on("disconnect", function () {
     for (let i = 0; i < players.length; i++) {
       if (players[i].id == socket.id) players.splice(i, 1);
     }
@@ -78,10 +68,8 @@ function draw() {
 
   // Draw all other players except the current itself
   for (let i = 0; i < players.length; i++) {
-    if (connecitonReady) {
-      if (players[i].id !== socket.id) {
-        players[i].show();
-      }
+    if (players[i].id !== socket.id) {
+      players[i].show();
     }
   }
 
@@ -100,6 +88,6 @@ function createAnimations() {
     yellow: yellowAnimations,
     red: redAnimations,
     black: blackAnimations,
-    blue: blueAnimations
+    blue: blueAnimations,
   };
 }
