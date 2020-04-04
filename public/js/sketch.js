@@ -15,6 +15,11 @@ let allAnimations = {};
 
 let playersData;
 
+// ***************************************
+// TODO : create an animation object for each player with their socket id's.
+// Play that spesific animation when needed.
+// ***************************************
+
 function setup() {
   // Create a socket to local port 3000
   connecitonReady = false;
@@ -40,12 +45,12 @@ function setup() {
   socket.emit("start", player);
 
   // Set the player's id when connection is ready
-  socket.on("connect", function () {
+  socket.on("connect", function() {
     player.id = socket.id;
   });
 
   // Read other players datas
-  socket.on("heartbeat", function (data) {
+  socket.on("heartbeat", function(data) {
     players = data;
 
     for (let i = 0; i < data.length; i++) {
@@ -86,6 +91,6 @@ function createAnimations() {
     yellow: yellowAnimations,
     red: redAnimations,
     black: blackAnimations,
-    blue: blueAnimations,
+    blue: blueAnimations
   };
 }
