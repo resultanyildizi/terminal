@@ -59,8 +59,8 @@ class Player {
 
     fill(255);
     textAlign(CENTER);
-    textSize(20);
-    text(this.name, this.pos.x, this.pos.y - 70); // name
+    textSize(12);
+    text(this.name, this.pos.x, this.pos.y - 50); // name
   }
 
   update() {
