@@ -8,11 +8,6 @@ let levelDesigner;
 
 let allAnimations = {};
 
-// ***************************************
-// TODO : create an animation object for each player with their socket id's.
-// Play that spesific animation when needed.
-// ***************************************
-
 function setup() {
   // Create a socket to local port 3000
   connecitonReady = false;
