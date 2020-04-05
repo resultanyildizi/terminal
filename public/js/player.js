@@ -48,8 +48,8 @@ class Player {
       currShadow.height * 2
     ); // shadow
 
-    if (allAnimations[this.id] != undefined)
-      allAnimations[this.id][this.currentAnimation].play(
+    if (game.allAnimations[this.id] != undefined)
+      game.allAnimations[this.id][this.currentAnimation].play(
         this.pos.x,
         this.pos.y,
         this.direction,
@@ -157,9 +157,9 @@ class Player {
 
   collidesPlatforms() {
     this.rigidBody.collides = false;
-    for (let i = 0; i < platforms.length; i++)
+    for (let i = 0; i < game.platforms.length; i++)
       this.rigidBody.collides |=
-        this.rigidBody.collidesPlatform(platforms[i]) ||
+        this.rigidBody.collidesPlatform(game.platforms[i]) ||
         this.rigidBody.collides;
     return;
   }
