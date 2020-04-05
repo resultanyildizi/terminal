@@ -56,6 +56,11 @@ class Player {
         0.2,
         2
       ); // player
+
+    fill(255);
+    textAlign(CENTER);
+    textSize(20);
+    text(this.name, this.pos.x, this.pos.y - 70); // name
   }
 
   update() {

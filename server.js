@@ -45,7 +45,10 @@ io.sockets.on(
     console.log("We have a new client: " + socket.id);
 
     socket.on("start", function (data) {
+      data.id = socket.id;
       players.push(data);
+
+      console.log(players);
     });
 
     socket.on("update", function (data) {
