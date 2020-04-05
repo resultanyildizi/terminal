@@ -48,13 +48,14 @@ class Player {
       currShadow.height * 2
     ); // shadow
 
-    allAnimations[this.color][this.currentAnimation].play(
-      this.pos.x,
-      this.pos.y,
-      this.direction,
-      0.2,
-      2
-    ); // player
+    if (allAnimations[this.id] != undefined)
+      allAnimations[this.id][this.currentAnimation].play(
+        this.pos.x,
+        this.pos.y,
+        this.direction,
+        0.2,
+        2
+      ); // player
   }
 
   update() {

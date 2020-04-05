@@ -62,6 +62,7 @@ io.sockets.on(
           players.splice(i, 1);
         }
       }
+      io.sockets.emit("deleteAnim", socket.id);
       console.log("Client has disconnected");
     });
   }

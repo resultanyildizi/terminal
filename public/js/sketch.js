@@ -6,14 +6,7 @@ let players = [];
 let platforms = [];
 let levelDesigner;
 
-let yellowAnimations;
-let redAnimations;
-let blackAnimations;
-let blueAnimations;
-
 let allAnimations = {};
-
-let playersData;
 
 // ***************************************
 // TODO : create an animation object for each player with their socket id's.
@@ -34,9 +27,6 @@ function setup() {
   levelDesigner = new LevelDesigner("res/levels//level2.txt");
   platforms = levelDesigner.platforms;
 
-  // Create the animations which players need
-  createAnimations();
-
   // Create the current player
   player = new Player(0, "Resul", 1400, 100, "yellow");
   player.setup();
@@ -45,17 +35,26 @@ function setup() {
   socket.emit("start", player);
 
   // Set the player's id when connection is ready
-  socket.on("connect", function() {
+  socket.on("connect", function () {
     player.id = socket.id;
   });
 
   // Read other players datas
-  socket.on("heartbeat", function(data) {
+  socket.on("heartbeat", function (data) {
     players = data;
 
     for (let i = 0; i < data.length; i++) {
+      if (allAnimations[players[i].id] == undefined) {
+        allAnimations[players[i].id] = resourceToAnimations(
+          resources[players[i].color]
+        );
+      }
       players[i].__proto__ = Player.prototype;
     }
+  });
+
+  socket.on("deleteAnim", function (id) {
+    delete allAnimations[id];
   });
 }
 
@@ -79,18 +78,4 @@ function draw() {
   player.show();
 
   socket.emit("update", player);
-}
-
-function createAnimations() {
-  yellowAnimations = resourceToAnimations(resources["yellow"]);
-  redAnimations = resourceToAnimations(resources["red"]);
-  blackAnimations = resourceToAnimations(resources["black"]);
-  blueAnimations = resourceToAnimations(resources["blue"]);
-
-  allAnimations = {
-    yellow: yellowAnimations,
-    red: redAnimations,
-    black: blackAnimations,
-    blue: blueAnimations
-  };
 }
