@@ -1,11 +1,15 @@
+@import url("https://fonts.googleapis.com/css?family=Exo+2|Kanit|Montserrat|Special+Elite|Varela+Round&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Exo+2|Kanit|Montserrat|Varela+Round&display=swap");
 html,
 body {
-  margin: 200;
+  margin-top: 20px;
   padding: 0;
+  background: rgb(211, 86, 86);
 }
 canvas {
   margin: auto;
   display: block;
+  border: 2px solid white;
 }
 
 #sketchHolder {
@@ -29,6 +33,24 @@ canvas {
   transition-duration: 0.2s;
 }
 
+#title {
+  text-align: center;
+  color: white;
+  font-family: "Special Elite", cursive;
+  font-size: 3em;
+  font-weight: bold;
+  cursor: none;
+}
+
+#nameInput {
+  font-size: 16px;
+  border-radius: 8px;
+  text-align: center;
+  outline: none;
+  border: 2px solid #d84d4d;
+  background-color: #ffd2d2;
+}
+
 #colorButtonRed {
   display: inline-block;
   text-decoration: none;
@@ -48,6 +70,8 @@ canvas {
   box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.5),
     0 2px 2px rgba(0, 0, 0, 0.19);
   border-bottom: solid 2px #b5b5b5;
+  cursor: pointer;
+  outline: none;
 }
 
 #colorButtonYellow {
@@ -69,6 +93,8 @@ canvas {
   box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.5),
     0 2px 2px rgba(0, 0, 0, 0.19);
   border-bottom: solid 2px #b5b5b5;
+  cursor: pointer;
+  outline: none;
 }
 
 #colorButtonBlack {
@@ -90,6 +116,8 @@ canvas {
   box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.5),
     0 2px 2px rgba(0, 0, 0, 0.19);
   border-bottom: solid 2px #b5b5b5;
+  cursor: pointer;
+  outline: none;
 }
 
 #colorButtonBlue {
@@ -111,4 +139,6 @@ canvas {
   box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.5),
     0 2px 2px rgba(0, 0, 0, 0.19);
   border-bottom: solid 2px #b5b5b5;
+  cursor: pointer;
+  outline: none;
 }

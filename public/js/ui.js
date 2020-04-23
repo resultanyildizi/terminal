@@ -3,15 +3,16 @@ function MainMenuUI() {
   let playerColor = "red";
   startButton = createButton("Start");
   input = createInput().attribute("placeHolder", "Enter Your Name");
+  title = createDiv("TERMINAL");
+
+  title.parent("sketchHolder");
+  title.position(width / 2 - 110, height / 2 - 80);
+  title.id("title");
 
   input.parent("sketchHolder");
   input.position(width / 2 - 110, height / 2 - 20);
   input.size(220, 30);
-  input.style("font-size", "16px");
-  input.style("border-radius", "8px");
-  input.style("text-align", "center");
-  input.style("outline", "none");
-  input.style("border", "2px solid #4CAF50");
+  input.id("nameInput");
 
   redButton = createButton("");
   redButton.parent("sketchHolder");
@@ -57,6 +58,7 @@ function MainMenuUI() {
       yellowButton.hide();
       blackButton.hide();
       blueButton.hide();
+      title.hide();
     }
   });
 
@@ -65,29 +67,31 @@ function MainMenuUI() {
     startButton.style("transform", "translateY(-4px)");
   });
 
-  input.mousePressed(function () {
-    input.value("");
-    input.style("border", "2px solid #367c39");
-    input.style("background-color", "#a6d8a8");
-  });
-
   redButton.mousePressed(function () {
     startButton.style("background-color", "#d84d4d");
+    input.style("border", "2px solid #d84d4d");
+    input.style("background", "#ffd2d2");
     playerColor = "red";
   });
 
   yellowButton.mousePressed(function () {
     startButton.style("background-color", "#d6d84d");
+    input.style("border", "2px solid #d6d84d");
+    input.style("background", "#feffd0");
     playerColor = "yellow";
   });
 
   blackButton.mousePressed(function () {
     startButton.style("background-color", "#4e4c4c");
+    input.style("border", "2px solid #4e4c4c");
+    input.style("background", "white");
     playerColor = "black";
   });
 
   blueButton.mousePressed(function () {
     startButton.style("background-color", "#4d56d8");
+    input.style("border", "2px solid #4d56d8");
+    input.style("background", "#cfd2ff");
     playerColor = "blue";
   });
 }
