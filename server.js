@@ -30,7 +30,7 @@ app.use(express.static("public"));
 // WebSockets work with the HTTP server
 var io = require("socket.io")(server);
 
-setInterval(heartbeat, 30);
+setInterval(heartbeat, 15);
 
 function heartbeat() {
   io.sockets.emit("heartbeat", players);
@@ -47,8 +47,6 @@ io.sockets.on(
     socket.on("start", function (data) {
       data.id = socket.id;
       players.push(data);
-
-      console.log(players);
     });
 
     socket.on("update", function (data) {
