@@ -10,11 +10,12 @@ function setup() {
   // Create a socket to local port 3000
   socket = io.connect();
   // Create the game canvas
-  createCanvas(1600, 768);
+  var canvas = createCanvas(1600, 768);
+  canvas.parent("sketchHolder");
   // Load the resources that game need
   loadResources();
 
-  UI();
+  MainMenuUI();
 
   // Read other players datas
   socket.on("heartbeat", function (data) {

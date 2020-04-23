@@ -1,9 +1,114 @@
-html, body {
-    margin: 200;
-    padding: 0;
-  }
-  canvas {
-    margin: auto;
-    display: block;
-  }
-  
+html,
+body {
+  margin: 200;
+  padding: 0;
+}
+canvas {
+  margin: auto;
+  display: block;
+}
+
+#sketchHolder {
+  width: 1600px;
+  height: 768px;
+  margin: 0 auto;
+  position: relative;
+}
+
+#startButton {
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #d84d4d;
+  border: none;
+  box-shadow: 0 9px #999;
+  transition-duration: 0.2s;
+}
+
+#colorButtonRed {
+  display: inline-block;
+  text-decoration: none;
+  color: rgba(152, 152, 152, 0.43); /*IconColor*/
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  font-size: 40px;
+  border-radius: 50%;
+  text-align: center;
+  vertical-align: middle;
+  overflow: hidden;
+  font-weight: bold;
+  background-image: -webkit-linear-gradient(#792424 0%, #d84d4d 100%);
+  background-image: linear-gradient(#792424 0%, #d84d4d 100%);
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.66);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.5),
+    0 2px 2px rgba(0, 0, 0, 0.19);
+  border-bottom: solid 2px #b5b5b5;
+}
+
+#colorButtonYellow {
+  display: inline-block;
+  text-decoration: none;
+  color: rgba(152, 152, 152, 0.43); /*IconColor*/
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  font-size: 40px;
+  border-radius: 50%;
+  text-align: center;
+  vertical-align: middle;
+  overflow: hidden;
+  font-weight: bold;
+  background-image: -webkit-linear-gradient(#797324 0%, #d6d84d 100%);
+  background-image: linear-gradient(#797324 0%, #d6d84d 100%);
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.66);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.5),
+    0 2px 2px rgba(0, 0, 0, 0.19);
+  border-bottom: solid 2px #b5b5b5;
+}
+
+#colorButtonBlack {
+  display: inline-block;
+  text-decoration: none;
+  color: rgba(152, 152, 152, 0.43); /*IconColor*/
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  font-size: 40px;
+  border-radius: 50%;
+  text-align: center;
+  vertical-align: middle;
+  overflow: hidden;
+  font-weight: bold;
+  background-image: -webkit-linear-gradient(#131111 0%, #4e4c4c 100%);
+  background-image: linear-gradient(#131111 0%, #4e4c4c 100%);
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.66);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.5),
+    0 2px 2px rgba(0, 0, 0, 0.19);
+  border-bottom: solid 2px #b5b5b5;
+}
+
+#colorButtonBlue {
+  display: inline-block;
+  text-decoration: none;
+  color: rgba(152, 152, 152, 0.43); /*IconColor*/
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  font-size: 40px;
+  border-radius: 50%;
+  text-align: center;
+  vertical-align: middle;
+  overflow: hidden;
+  font-weight: bold;
+  background-image: -webkit-linear-gradient(#2d2479 0%, #4d56d8 100%);
+  background-image: linear-gradient(#2d2479 0%, #4d56d8 100%);
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.66);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.5),
+    0 2px 2px rgba(0, 0, 0, 0.19);
+  border-bottom: solid 2px #b5b5b5;
+}

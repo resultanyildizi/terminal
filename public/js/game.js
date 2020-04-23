@@ -1,17 +1,16 @@
 class Game {
-  constructor(pname) {
+  constructor(pname, pcolor) {
     this.player;
     this.players = [];
 
     this.platforms = [];
     this.levelDesigner;
 
-    this.pname;
-    this.pcolor;
+    this.pname = pname;
+    this.pcolor = pcolor;
     this.allAnimations = {};
 
     this.socket = socket;
-    this.pname = pname;
   }
 
   setup() {
@@ -20,7 +19,7 @@ class Game {
     this.platforms = this.levelDesigner.platforms;
 
     // Create the current player
-    this.player = new Player(0, this.pname, 1400, 100, "black");
+    this.player = new Player(0, this.pname, 1400, 100, this.pcolor);
     this.player.setup();
     // Send the player data to the other clients
   }
