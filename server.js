@@ -7,6 +7,7 @@
 // http://itp.nyu.edu/~sve204/liveweb_fall2013/week3.html
 
 var players = [];
+var bullets = [];
 
 // Using express: http://expressjs.com/
 var express = require("express");
@@ -30,7 +31,7 @@ app.use(express.static("public"));
 // WebSockets work with the HTTP server
 var io = require("socket.io")(server);
 
-setInterval(heartbeat, 5);
+setInterval(heartbeat, 20);
 
 function heartbeat() {
   io.sockets.emit("heartbeat", players);
@@ -57,6 +58,10 @@ io.sockets.on(
       }
     });
 
+    socket.on("bulletUpdate", function (data) {
+      bullets = data;
+    });
+
     socket.on("disconnect", function () {
       for (let i = 0; i < players.length; i++) {
         if (socket.id == players[i].id) {
@@ -65,6 +70,10 @@ io.sockets.on(
       }
       io.sockets.emit("deleteAnim", socket.id);
       console.log("Client has disconnected");
+    });
+
+    socket.on("shoot", function (bullet) {
+      io.sockets.emit("shoot", bullet);
     });
   }
 );

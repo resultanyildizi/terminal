@@ -18,7 +18,7 @@ function setup() {
   MainMenuUI();
 
   // Read other players datas
-  socket.on("heartbeat", function (data) {
+  socket.on("heartbeat", function (data, bullets) {
     if (gameReady) {
       game.players = data;
 
@@ -34,7 +34,14 @@ function setup() {
   });
 
   socket.on("deleteAnim", function (id) {
-    delete allAnimations[id];
+    delete game.allAnimations[id];
+  });
+
+  socket.on("shoot", function (bullet) {
+    bullet.__proto__ = Bullet.prototype;
+    game.bullets.push(bullet);
+
+    console.log(game.bullets.length);
   });
 }
 

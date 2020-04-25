@@ -2,7 +2,7 @@ class Game {
   constructor(pname, pcolor) {
     this.player;
     this.players = [];
-
+    this.bullets = [];
     this.platforms = [];
     this.levelDesigner;
 
@@ -37,6 +37,11 @@ class Game {
       }
     }
 
+    for (let i = 0; i < this.bullets.length; ++i) {
+      this.bullets[i].move();
+      this.bullets[i].draw();
+      if (this.bullets[i].isOut()) this.bullets.splice(i, 1);
+    }
     // Update and draw the current player
     this.player.update();
     this.player.show();

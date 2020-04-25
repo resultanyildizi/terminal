@@ -28,7 +28,7 @@ class Animation {
     translate(x, y);
     scale(dir, 1);
     imageMode(CENTER);
-    image(im, 0, 0, im.width * scalar, im.height * scalar);
+    image(im, 0, 0, im.width * 2, im.height * 2);
     pop();
   }
 }

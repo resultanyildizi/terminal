@@ -20,7 +20,9 @@ class Player {
     this.pos = { x: _x, y: _y };
 
     this.rigidBody;
-    this.gun;
+    this.bullets = [];
+    this.bullet_y = 5;
+    this.shootingDelay = 5;
     this.UI;
   }
 
@@ -57,10 +59,19 @@ class Player {
         2
       ); // player
 
+    // drawing health bar
+    push();
+    noStroke();
+    fill("RED");
+    rect(this.pos.x - 30, this.pos.y - 50, 100.0 * 0.6, 7.0);
+    fill("GREEN");
+    rect(this.pos.x - 30, this.pos.y - 50, this.health * 0.6, 7.0);
+    pop();
+
     fill(255);
     textAlign(CENTER);
     textSize(12);
-    text(this.name, this.pos.x, this.pos.y - 50); // name
+    text(this.name, this.pos.x, this.pos.y - 60); // name
   }
 
   update() {
@@ -79,8 +90,10 @@ class Player {
     this.rigidBody.acc.x = 0;
 
     this.collidesPlatforms();
+    this.shoot();
 
     this.pos = this.rigidBody.pos;
+    // if (this.health >= 0.0) this.health -= 0.1;
   }
 
   keyPressed() {
@@ -94,11 +107,14 @@ class Player {
   move() {
     if (!keyIsPressed) {
       this.currentAnimation = "idle";
+      this.bullet_y = 5;
     } else {
       // Send current player's updated datas to the other clients
     }
     if (!(keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW))) {
       this.rigidBody.vel.x = 0;
+      this.currentAnimation = "idle";
+      this.bullet_y = 5;
     }
     if (
       (keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW)) &&
@@ -106,21 +122,25 @@ class Player {
     ) {
       this.walk();
       if (this.rigidBody.collides) this.currentAnimation = "run";
+      this.bullet_y = 5;
     }
     if (keyIsDown(UP_ARROW) && this.rigidBody.collides) {
       this.keyPressed();
+      this.bullet_y = 5;
     }
     if (keyIsDown(DOWN_ARROW)) {
       this.crouch();
       this.currentAnimation = "crouch";
       // this.rigidBody.h = this.rbh - 20;
+      this.bullet_y = 0;
     } else {
       this.rigidBody.h = 60;
     }
-    if (keyIsDown(SPACE)) {
+
+    /*if (keyIsDown(SPACE)) {
       this.die();
       this.currentAnimation = "death";
-    }
+    }*/
   }
 
   walk() {
@@ -151,6 +171,21 @@ class Player {
       if (this.rigidBody.vel.x <= 0.2 && this.rigidBody.vel.x >= -0.2)
         this.rigidBody.vel.x = 0.0;
     }
+  }
+
+  shoot() {
+    if (keyIsDown(SPACE) && this.shootingDelay <= 0.0) {
+      let bullet = new Bullet(
+        this.id,
+        this.pos.x,
+        this.pos.y - this.bullet_y,
+        this.direction
+      );
+      socket.emit("shoot", bullet);
+      this.shootingDelay = 20;
+    }
+
+    this.shootingDelay -= 1.0;
   }
 
   die() {}
