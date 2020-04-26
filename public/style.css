@@ -4,7 +4,8 @@ html,
 body {
   padding: 0;
   padding-top: 20px;
-  background-image: url("res/background.jpg");
+  background-position: center;
+  background-image: url("res/background1.jpeg");
 }
 canvas {
   margin: auto;

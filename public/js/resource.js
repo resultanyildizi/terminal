@@ -19,6 +19,7 @@ let clrArr = ["Black", "Yellow", "Red", "Blue"];
 let currSheets = [];
 let currDatas = [];
 let currShadow;
+let muzzleFlash;
 
 let platformSprite1;
 let platformSprite2;
@@ -49,6 +50,8 @@ function preload() {
   }
 
   currShadow = loadImage("res/extras/Shadow.png");
+  muzzleFlashR = loadImage("res/extras/MuzzleFlashR.png");
+  muzzleFlashL = loadImage("res/extras/MuzzleFlashL.png");
   platformSprite1 = loadImage("res/extras/Platform.png");
   platformSprite2 = loadImage("res/extras/Platform2.png");
 
@@ -61,7 +64,7 @@ function loadResources() {
     black: new Resource("black"),
     yellow: new Resource("yellow"),
     red: new Resource("yellow"),
-    blue: new Resource("blue")
+    blue: new Resource("blue"),
   };
 
   let keys = Object.keys(resources);
@@ -86,7 +89,7 @@ function resourceToAnimations(resource) {
     death: new Animation(res.spriteSheets[DEATH], res.spriteDatas[DEATH], true),
     idle: new Animation(res.spriteSheets[IDLE], res.spriteDatas[IDLE], false),
     jump: new Animation(res.spriteSheets[JUMP], res.spriteDatas[JUMP], true),
-    run: new Animation(res.spriteSheets[RUN], res.spriteDatas[RUN], false)
+    run: new Animation(res.spriteSheets[RUN], res.spriteDatas[RUN], false),
   };
 
   return animations;

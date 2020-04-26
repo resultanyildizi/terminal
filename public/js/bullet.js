@@ -5,9 +5,12 @@ class Bullet {
     this.speed = 50;
     this.dir = dir;
     this.start_x = x;
+    this.start_y = y;
     this.pos_x = x;
     this.pos_y = y;
     this.done = false;
+    this.muzzle = 0;
+    this.scalar = random(1.5, 2.0);
   }
 
   move() {
@@ -27,8 +30,33 @@ class Bullet {
     fill(col);
     rect(this.pos_x - 20 * this.dir, this.pos_y, 20, 2);
     pop();
-  }
 
+    let muzzlex;
+    let muzzley;
+    // draw muzzle flash
+
+    let im;
+    if (this.dir == 1) {
+      im = muzzleFlashR;
+      muzzlex = this.start_x + 32 * this.dir;
+      muzzley = this.start_y - 7.5;
+    } else {
+      im = muzzleFlashL;
+      muzzlex = this.start_x + 47 * this.dir;
+      muzzley = this.start_y - 7.5;
+    }
+
+    if (this.muzzle <= 2) {
+      this.muzzle += 1;
+      image(
+        im,
+        muzzlex,
+        muzzley,
+        im.width * this.scalar,
+        im.height * this.scalar
+      );
+    }
+  }
   collidesPlayer() {
     let players = game.players;
     for (let i = 0; i < players.length; i++) {

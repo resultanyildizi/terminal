@@ -7,6 +7,7 @@ let game;
 let gameReady;
 let timeOut;
 function setup() {
+  frameRate(120);
   // Create a socket to local port 3000
   socket = io.connect();
   // Create the game canvas
