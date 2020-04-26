@@ -43,9 +43,8 @@ function setup() {
 
   socket.on("shoot", function (bullet) {
     bullet.__proto__ = Bullet.prototype;
-    game.bullets.push(bullet);
 
-    console.log(game.bullets.length);
+    if (bullet.id != socket.id) game.bullets.push(bullet);
   });
 
   socket.on("getdamage", function (id) {

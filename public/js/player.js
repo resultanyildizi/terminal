@@ -185,6 +185,7 @@ class Player {
         this.direction
       );
       socket.emit("shoot", bullet);
+      game.bullets.push(bullet);
       this.shootingDelay = 20;
     }
 
@@ -199,9 +200,8 @@ class Player {
   getDamage() {
     if (this.health > 0) {
       this.health -= bulletDamage;
-    } else {
-      this.isDead = true;
     }
+    if (this.health <= 0) this.isDead = true;
   }
 
   collidesPlatforms() {
