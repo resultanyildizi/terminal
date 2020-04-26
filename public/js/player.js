@@ -16,7 +16,7 @@ class Player {
     this.armor = 0.0;
 
     this.currentAnimation = "idle";
-
+    this.isDead = false;
     this.pos = { x: _x, y: _y };
 
     this.rigidBody;
@@ -71,12 +71,10 @@ class Player {
     fill(255);
     textAlign(CENTER);
     textSize(12);
-    text(this.name, this.pos.x, this.pos.y - 60); // name
+    text(this.name + " %" + this.health, this.pos.x, this.pos.y - 60); // name
   }
 
   update() {
-    this.move();
-
     this.rigidBody.acc.y += this.rigidBody.gravity.y;
     this.rigidBody.acc.x += this.rigidBody.gravity.x;
 
@@ -89,8 +87,13 @@ class Player {
     this.rigidBody.acc.y = 0;
     this.rigidBody.acc.x = 0;
 
+    if (!this.isDead) {
+      this.move();
+      this.shoot();
+    } else {
+      this.die();
+    }
     this.collidesPlatforms();
-    this.shoot();
 
     this.pos = this.rigidBody.pos;
     // if (this.health >= 0.0) this.health -= 0.1;
@@ -188,7 +191,18 @@ class Player {
     this.shootingDelay -= 1.0;
   }
 
-  die() {}
+  die() {
+    this.currentAnimation = "death";
+    this.rigidBody.vel.x = 0;
+  }
+
+  getDamage() {
+    if (this.health > 0) {
+      this.health -= bulletDamage;
+    } else {
+      this.isDead = true;
+    }
+  }
 
   collidesPlatforms() {
     this.rigidBody.collides = false;

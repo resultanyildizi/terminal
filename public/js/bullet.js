@@ -1,10 +1,13 @@
+let bulletDamage = 5;
 class Bullet {
   constructor(id, x, y, dir) {
     this.id = id;
     this.speed = 30;
     this.dir = dir;
+    this.start_x = x;
     this.pos_x = x;
     this.pos_y = y;
+    this.done = false;
   }
 
   move() {
@@ -26,7 +29,47 @@ class Bullet {
     pop();
   }
 
+  collidesPlayer() {
+    let players = game.players;
+    for (let i = 0; i < players.length; i++) {
+      let current = players[i];
+      let currentBottom = current.pos.y + current.rigidBody.h / 2;
+      let currentTop = current.pos.y - current.rigidBody.h / 2;
+      let currentRight = current.pos.x + current.rigidBody.w / 2;
+      let currentLeft = current.pos.x - current.rigidBody.w / 2;
+
+      if (this.dir == -1 && this.start_x >= currentRight) {
+        if (
+          this.pos_x <= currentRight &&
+          this.pos_y <= currentBottom &&
+          this.pos_y >= currentTop &&
+          this.id != current.id
+        ) {
+          this.done = true;
+          socket.emit("givedamage", current.id);
+          console.log("came");
+        }
+      } else if (this.dir == 1 && this.start_x <= currentLeft) {
+        if (
+          this.pos_x >= currentLeft &&
+          this.pos_y <= currentBottom &&
+          this.pos_y >= currentTop &&
+          this.id != current.id
+        ) {
+          this.done = true;
+          socket.emit("givedamage", current.id);
+          console.log("came");
+        }
+      }
+    }
+  }
+
+  update() {
+    this.move();
+    this.collidesPlayer();
+  }
+
   isOut() {
-    return this.pos_x < 0 || this.pos_x > width;
+    return this.pos_x < 0 || this.pos_x > width || this.done;
   }
 }

@@ -9,6 +9,8 @@
 var players = [];
 var bullets = [];
 
+var alreadySent = false;
+
 // Using express: http://expressjs.com/
 var express = require("express");
 var delay = require("express-delay");
@@ -31,7 +33,7 @@ app.use(express.static("public"));
 // WebSockets work with the HTTP server
 var io = require("socket.io")(server);
 
-setInterval(heartbeat, 20);
+setInterval(heartbeat, 12);
 
 function heartbeat() {
   io.sockets.emit("heartbeat", players);
@@ -74,6 +76,10 @@ io.sockets.on(
 
     socket.on("shoot", function (bullet) {
       io.sockets.emit("shoot", bullet);
+    });
+
+    socket.on("givedamage", function (id) {
+      io.sockets.emit("getdamage", id);
     });
   }
 );

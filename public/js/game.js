@@ -38,7 +38,7 @@ class Game {
     }
 
     for (let i = 0; i < this.bullets.length; ++i) {
-      this.bullets[i].move();
+      this.bullets[i].update();
       this.bullets[i].draw();
       if (this.bullets[i].isOut()) this.bullets.splice(i, 1);
     }

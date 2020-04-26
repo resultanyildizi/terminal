@@ -5,7 +5,7 @@ let input;
 
 let game;
 let gameReady;
-
+let timeOut;
 function setup() {
   // Create a socket to local port 3000
   socket = io.connect();
@@ -16,6 +16,8 @@ function setup() {
   loadResources();
 
   MainMenuUI();
+
+  timeOut = 5.0;
 
   // Read other players datas
   socket.on("heartbeat", function (data, bullets) {
@@ -30,6 +32,8 @@ function setup() {
         }
         game.players[i].__proto__ = Player.prototype;
       }
+
+      timeOut -= 1;
     }
   });
 
@@ -42,6 +46,13 @@ function setup() {
     game.bullets.push(bullet);
 
     console.log(game.bullets.length);
+  });
+
+  socket.on("getdamage", function (id) {
+    if (id == socket.id && timeOut <= 0) {
+      game.player.getDamage(game.players.length);
+      timeOut = 5.0;
+    }
   });
 }
 
