@@ -20,10 +20,11 @@ class Player {
     this.pos = { x: _x, y: _y };
 
     this.rigidBody;
+    this.score = 0;
     this.bullets = [];
     this.bullet_y = 5;
     this.shootingDelay = 5;
-    this.UI;
+    this.respawnTime = 300.0;
   }
 
   setup() {
@@ -195,6 +196,11 @@ class Player {
   die() {
     this.currentAnimation = "death";
     this.rigidBody.vel.x = 0;
+
+    this.respawnTime -= 1.0;
+    if (this.respawnTime <= -1) {
+      this.respawn();
+    }
   }
 
   getDamage() {
@@ -202,6 +208,21 @@ class Player {
       this.health -= bulletDamage;
     }
     if (this.health <= 0) this.isDead = true;
+  }
+
+  getScore(id) {
+    if (id == this.id) this.score += 10;
+  }
+
+  respawn() {
+    this.health = 100.0;
+    this.armor = 0.0;
+    this.dir = 1;
+    this.currentAnimation = "idle";
+    this.pos.x = 1400;
+    this.pos.y = 100;
+    this.isDead = false;
+    this.respawnTime = 300.0;
   }
 
   collidesPlatforms() {

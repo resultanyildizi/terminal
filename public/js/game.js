@@ -45,5 +45,31 @@ class Game {
     // Update and draw the current player
     this.player.update();
     this.player.show();
+
+    // drawing score
+    push();
+    fill("GREEN");
+    stroke("WHITE");
+    textAlign(LEFT);
+    textSize(24);
+    text("SCORE: " + this.player.score, 10, 34);
+    pop();
+
+    // drawing countdown
+    if (game.player.isDead) {
+      push();
+      fill("WHITE");
+      noStroke();
+      textAlign(CENTER);
+      textSize(48);
+      text(
+        "GAME WILL RESTART IN: " +
+          (floor(game.player.respawnTime / 100) + 1) +
+          "s",
+        width / 2,
+        60
+      );
+      pop();
+    }
   }
 }

@@ -1,8 +1,8 @@
-let bulletDamage = 5;
+let bulletDamage = 10;
 class Bullet {
   constructor(id, x, y, dir) {
     this.id = id;
-    this.speed = 30;
+    this.speed = 50;
     this.dir = dir;
     this.start_x = x;
     this.pos_x = x;
@@ -43,9 +43,11 @@ class Bullet {
           this.pos_x <= currentRight &&
           this.pos_y <= currentBottom &&
           this.pos_y >= currentTop &&
-          this.id != current.id
+          this.id != current.id &&
+          !current.isDead
         ) {
           this.done = true;
+          if (current.health <= bulletDamage) game.player.getScore(this.id);
           socket.emit("givedamage", current.id);
           console.log("came");
         }
@@ -54,9 +56,11 @@ class Bullet {
           this.pos_x >= currentLeft &&
           this.pos_y <= currentBottom &&
           this.pos_y >= currentTop &&
-          this.id != current.id
+          this.id != current.id &&
+          !current.isDead
         ) {
           this.done = true;
+          if (current.health <= bulletDamage) game.player.getScore(this.id);
           socket.emit("givedamage", current.id);
           console.log("came");
         }
