@@ -87,7 +87,7 @@ class Player {
 
     this.rigidBody.acc.y = 0;
     this.rigidBody.acc.x = 0;
-    if (this.rigidBody.pos.y > witdh + 50) this.isDead = true;
+
     if (!this.isDead) {
       this.move();
       this.shoot();
@@ -95,7 +95,7 @@ class Player {
       this.die();
     }
     this.collidesPlatforms();
-    this.regenerateHealth();
+    // this.regenerateHealth();
 
     this.pos = this.rigidBody.pos;
     // if (this.health >= 0.0) this.health -= 0.1;
