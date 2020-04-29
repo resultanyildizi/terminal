@@ -1,3 +1,5 @@
+let gameTime = 60;
+let maxPlayer = 3;
 class Game {
   constructor(pname, pcolor) {
     this.player;
@@ -5,12 +7,18 @@ class Game {
     this.bullets = [];
     this.platforms = [];
     this.levelDesigner;
-
     this.pname = pname;
     this.pcolor = pcolor;
     this.allAnimations = {};
-
     this.socket = socket;
+    this.timer;
+
+    this.winner = {
+      id: "",
+      name: "",
+      score: 0,
+      color: "",
+    };
   }
 
   setup() {
@@ -22,6 +30,22 @@ class Game {
     this.player = new Player(0, this.pname, 1400, 100, this.pcolor);
     this.player.setup();
     // Send the player data to the other clients
+  }
+
+  findWinner() {
+    let maxScore = this.players[0].score;
+    for (let i = 0; i < this.players.length; i++) {
+      let currentPlayer = this.players[i];
+      if (currentPlayer.score > maxScore) {
+        this.winner.id = currentPlayer.id;
+        this.winner.name = currentPlayer.name;
+        this.winner.score = currentPlayer.score;
+        this.winner.color = currentPlayer.color;
+      }
+
+      this.player.finished = true;
+      socket.emit("update", this.player);
+    }
   }
 
   draw() {
@@ -71,5 +95,19 @@ class Game {
       );
       pop();
     }
+
+    // drawing game time
+    push();
+    fill(255);
+    textSize(24);
+    let currentTime = floor(gameTime - (millis() - this.timer) / 1000);
+    if (currentTime <= 0) {
+      this.findWinner();
+      gameReady = false;
+      lobbyReady = false;
+      gameFinished();
+    }
+    text(currentTime + "s", width - 40, 40);
+    pop();
   }
 }

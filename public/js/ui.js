@@ -48,10 +48,24 @@ function MainMenuUI() {
     startButton.style("transform", "translateY(4px)");
 
     if (trim(input.value()) != "") {
-      game = new Game(input.value(), playerColor);
-      game.setup();
-      socket.emit("start", game.player);
-      gameReady = true;
+      let hasFinished = false;
+      for (let i = 0; i < globalData.length; i++) {
+        console.log(globalData[i].finished);
+        hasFinished |= globalData[i].finished;
+      }
+      if (globalData.length >= maxPlayer || hasFinished) {
+        gameisFull = true;
+        lobbyReady = false;
+        gameReady = false;
+      } else {
+        game = new Game(input.value(), playerColor);
+        game.setup();
+        socket.emit("start", game.player);
+        lobbyReady = true;
+
+        gameisFull = false;
+      }
+
       startButton.hide();
       input.hide();
       redButton.hide();
@@ -94,4 +108,42 @@ function MainMenuUI() {
     input.style("background", "#cfd2ff");
     playerColor = "blue";
   });
+}
+
+function lobby() {
+  fill(255);
+  textAlign(CENTER);
+  textSize(24);
+  text(
+    "Waiting for other players...\n" + game.players.length + "/" + maxPlayer,
+    width / 2,
+    height / 2
+  );
+}
+
+function gameFull() {
+  fill(255);
+  textAlign(CENTER);
+  textSize(24);
+  text(
+    "Game already started\nPlease wait for other players to finish!",
+    width / 2,
+    height / 2
+  );
+}
+
+function gameFinished() {
+  title = createDiv("TERMINAL");
+  title.parent("sketchHolder");
+  title.position(width / 2 - 110, 200);
+  title.id("title");
+  push();
+  stroke(255);
+  textSize(40);
+  background(30, 30, 30, 150);
+  fill(game.winner.color.toUpperCase());
+  textFont("Georgia");
+  text("The winner is\n" + game.winner.name, width / 2, height / 2);
+  pop();
+  noLoop();
 }

@@ -12,7 +12,7 @@ class Player {
     this.speed = 7;
     this.direction = 1;
 
-    this.health = 100.0;
+    this.health = 50.0;
     this.armor = 0.0;
 
     this.currentAnimation = "idle";
@@ -25,6 +25,7 @@ class Player {
     this.bullet_y = 5;
     this.shootingDelay = 5;
     this.respawnTime = 300.0;
+    this.finished = false;
   }
 
   setup() {
@@ -72,7 +73,7 @@ class Player {
     fill(255);
     textAlign(CENTER);
     textSize(12);
-    text(this.name + " %" + this.health, this.pos.x, this.pos.y - 60); // name
+    text(this.name + " %" + floor(this.health), this.pos.x, this.pos.y - 60); // name
   }
 
   update() {
@@ -88,6 +89,13 @@ class Player {
     this.rigidBody.acc.y = 0;
     this.rigidBody.acc.x = 0;
 
+    if (this.pos.y >= height + 100 && !this.isDead) {
+      this.rigidBody.vel.y = 0;
+      this.rigidBody.gravity.y = 0;
+      this.isDead = true;
+      if (this.score > 0) this.score -= 10;
+    }
+
     if (!this.isDead) {
       this.move();
       this.shoot();
@@ -95,10 +103,9 @@ class Player {
       this.die();
     }
     this.collidesPlatforms();
-    // this.regenerateHealth();
+    this.regenerateHealth();
 
     this.pos = this.rigidBody.pos;
-    // if (this.health >= 0.0) this.health -= 0.1;
   }
 
   keyPressed() {
@@ -205,16 +212,19 @@ class Player {
   }
 
   regenerateHealth() {
-    if (this.health < 100.0) {
+    if (this.health < 100.0 && !this.isDead) {
       this.health += 0.01;
     }
   }
 
   getDamage() {
     if (this.health > 0) {
-      this.health -= bulletDamage;
+      this.health -= bulletDamage / game.players.length;
     }
-    if (this.health <= 0) this.isDead = true;
+    if (this.health <= 0) {
+      this.isDead = true;
+      this.health = 0;
+    }
   }
 
   getScore(id) {
@@ -222,6 +232,7 @@ class Player {
   }
 
   respawn() {
+    this.rigidBody.gravity.y = 0.5;
     this.health = 100.0;
     this.armor = 0.0;
     this.dir = 1;

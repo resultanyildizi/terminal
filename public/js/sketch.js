@@ -1,13 +1,11 @@
 var socket;
-
-let startButton;
-let input;
-
+let globalData;
 let game;
 let gameReady;
-let timeOut;
+let lobbyReady;
+let gameisFull;
+
 function setup() {
-  frameRate(120);
   // Create a socket to local port 3000
   socket = io.connect();
   // Create the game canvas
@@ -15,16 +13,15 @@ function setup() {
   canvas.parent("sketchHolder");
   // Load the resources that game need
   loadResources();
-
+  gameReady = false;
+  lobbyReady = false;
+  gameisFull = false;
   MainMenuUI();
-
-  timeOut = 5.0;
-
   // Read other players datas
   socket.on("heartbeat", function (data, bullets) {
-    if (gameReady) {
+    globalData = data;
+    if (lobbyReady || gameReady) {
       game.players = data;
-
       for (let i = 0; i < data.length; i++) {
         if (game.allAnimations[game.players[i].id] == undefined) {
           game.allAnimations[game.players[i].id] = resourceToAnimations(
@@ -33,8 +30,6 @@ function setup() {
         }
         game.players[i].__proto__ = Player.prototype;
       }
-
-      timeOut -= 1;
     }
   });
 
@@ -49,18 +44,29 @@ function setup() {
   });
 
   socket.on("getdamage", function (id) {
-    if (id == socket.id && timeOut <= 0) {
+    if (id == socket.id) {
       game.player.getDamage(game.players.length);
-      timeOut = 5.0;
     }
   });
 }
 
 function draw() {
   background(51);
+  if (gameisFull) {
+    gameFull();
+    noLoop();
+  } else if (lobbyReady) {
+    if (game.players.length < maxPlayer) {
+      lobby();
+      game.player.id = socket.id;
+    } else {
+      gameReady = true;
+      lobbyReady = false;
+      game.timer = millis();
+    }
+  }
 
   if (gameReady) {
-    game.player.id = socket.id;
     game.draw();
     socket.emit("update", game.player);
   }
