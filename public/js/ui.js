@@ -143,7 +143,11 @@ function gameFinished() {
   background(30, 30, 30, 150);
   fill(game.winner.color.toUpperCase());
   textFont("Georgia");
-  text("The winner is\n" + game.winner.name, width / 2, height / 2);
+  text(
+    "The winner is\n" + game.winner.name + "\nScore : " + game.winner.score,
+    width / 2,
+    height / 2
+  );
   pop();
   noLoop();
 }

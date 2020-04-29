@@ -1,4 +1,4 @@
-let gameTime = 60;
+let gameTime = 90;
 let maxPlayer = 3;
 class Game {
   constructor(pname, pcolor) {
