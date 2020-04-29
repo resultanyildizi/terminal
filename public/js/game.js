@@ -34,6 +34,11 @@ class Game {
 
   findWinner() {
     let maxScore = this.players[0].score;
+    this.winner.id = this.players[0].id;
+    this.winner.name = this.players[0].name;
+    this.winner.score = this.players[0].score;
+    this.winner.color = this.players[0].color;
+
     for (let i = 0; i < this.players.length; i++) {
       let currentPlayer = this.players[i];
       if (currentPlayer.score > maxScore) {
