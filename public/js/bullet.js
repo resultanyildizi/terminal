@@ -11,7 +11,8 @@ class Bullet {
     this.done = false;
     this.muzzle = 0;
     this.scalar = random(1.5, 2.0);
-    shot_sound.play(0.3);
+    shot_sound.setVolume(0.6);
+    shot_sound.play();
   }
 
   move() {
@@ -93,7 +94,8 @@ class Bullet {
           if (current.health <= bulletDamage) game.player.getScore(this.id);
           socket.emit("givedamage", current.id);
           console.log("came");
-          blood_flesh_sound.play(0.2);
+          blood_flesh_sound.setVolume(0.6);
+          blood_flesh_sound.play();
         }
       }
     }

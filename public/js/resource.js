@@ -29,10 +29,8 @@ let loadingText;
 // Sounds
 let jump_sound;
 let shot_sound;
-let hurt1_sound;
-let hurt2_sound;
+let heal_sound;
 let blood_flesh_sound;
-let countdown_sound;
 let theme_sound;
 
 let IDjson;
@@ -86,6 +84,7 @@ function preload() {
   jump_sound = loadSound("res/sounds/jump.wav");
   shot_sound = loadSound("res/sounds/shot.wav");
   blood_flesh_sound = loadSound("res/sounds/blood_flesh.wav");
+  heal_sound = loadSound("res/sounds/heal.wav");
   // JSON
   IDjson = loadJSON("res/levels/id.json");
 

@@ -8,7 +8,8 @@ let gameStat;
 
 function setup() {
   loadingText.style("display", "none");
-  theme_sound.loop(0.5);
+  theme_sound.setVolume(0.8);
+  theme_sound.loop();
   // Create a socket to local port 3000
   socket = io.connect();
   // Loop the game music
@@ -84,4 +85,8 @@ function draw() {
     socket.emit("update", game.player);
     socket.emit("gameTime", game.currentTime);
   }
+}
+
+function mousePressed() {
+  console.log(mouseX + " " + mouseY);
 }

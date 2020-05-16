@@ -1,4 +1,4 @@
-let gameTime = 90;
+let gameTime = 180;
 let maxPlayer = 2;
 class Game {
   constructor(pname, pcolor) {
@@ -6,13 +6,14 @@ class Game {
     this.players = [];
     this.bullets = [];
     this.platforms = [];
-    this.healers = [];
+    this.healer = new Heal();
     this.levelDesigner;
     this.pname = pname;
     this.pcolor = pcolor;
     this.allAnimations = {};
     this.socket = socket;
     this.timer;
+    this.prevTime = 0;
 
     this.winner = {
       id: "",
@@ -31,11 +32,6 @@ class Game {
     this.player = new Player(0, this.pname, 1400, 100, this.pcolor);
     this.player.setup();
     // Send the player data to the other clients
-
-
-
-
-    this.healers.push(new Heal(200, 300));
   }
 
   findWinner() {
@@ -72,7 +68,6 @@ class Game {
       }
     }
 
-
     // Draw all bullets
     for (let i = 0; i < this.bullets.length; ++i) {
       this.bullets[i].update();
@@ -80,13 +75,11 @@ class Game {
       if (this.bullets[i].isOut()) this.bullets.splice(i, 1);
     }
 
-    // Draw all healers
-    for(let i = 0; i < this.healers.length; i++) {
-      this.healers[i].heal();
-      this.healers[i].draw();
-
-      if(this.healers[i].isGone) this.healers.splice(i, 1);
+    if (this.healer.isGone == false) {
+      this.healer.heal();
+      this.healer.draw();
     }
+
     // Update and draw the current player
     this.player.update();
     this.player.show();
@@ -122,6 +115,11 @@ class Game {
     fill(255);
     textSize(24);
     let currentTime = floor(gameTime - (millis() - this.timer) / 1000);
+
+    if (currentTime % 10 == 0 && currentTime != this.prevTime) {
+      this.healer = new Heal();
+      this.prevTime = currentTime;
+    }
     if (currentTime <= 0) {
       this.findWinner();
       gameReady = false;
@@ -131,7 +129,7 @@ class Game {
     }
     text(currentTime + "s", width - 40, 40);
 
-    if(game.players.length < 1) {
+    if (game.players.length < 1) {
       socket.emit("gameStat", "unknown");
       location.reload();
     }

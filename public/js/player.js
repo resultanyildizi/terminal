@@ -170,7 +170,8 @@ class Player {
   }
 
   jump() {
-    // jump_sound.play(0.3);
+    jump_sound.setVolume(0.5);
+    jump_sound.play();
     let jumpPower = -12.0;
     this.rigidBody.acc.y += jumpPower;
   }
