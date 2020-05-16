@@ -24,6 +24,8 @@ let muzzleFlash;
 let platformSprite1;
 let platformSprite2;
 
+let loadingText;
+
 // Sounds
 let jump_sound;
 let shot_sound;
@@ -41,7 +43,7 @@ function preload() {
   canvas.parent("sketchHolder");
   background(51);
 
-  var loadingText = createDiv("Loading Resources");
+  loadingText = createDiv("Loading Resources");
   loadingText.parent("sketchHolder");
   loadingText.style("text-align", "center");
   loadingText.style("font-size", "2em");
@@ -78,6 +80,7 @@ function preload() {
   platformSprite1 = loadImage("res/extras/Platform.png");
   platformSprite2 = loadImage("res/extras/Platform2.png");
 
+  loadingText.value("Loading Sounds...");
   // Sounds
   theme_sound = loadSound("res/sounds/theme.wav");
   jump_sound = loadSound("res/sounds/jump.wav");
@@ -86,7 +89,7 @@ function preload() {
   // JSON
   IDjson = loadJSON("res/levels/id.json");
 
-  // loadingText.style("display", "none");
+  //
 }
 
 let resources = [];

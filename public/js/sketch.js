@@ -7,6 +7,7 @@ let gameisFull;
 let gameStat;
 
 function setup() {
+  loadingText.style("display", "none");
   // Create a socket to local port 3000
   socket = io.connect();
   // Loop the game music
