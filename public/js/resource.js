@@ -86,7 +86,7 @@ function preload() {
   // JSON
   IDjson = loadJSON("res/levels/id.json");
 
-  loadingText.style("display", "none");
+  // loadingText.style("display", "none");
 }
 
 let resources = [];
