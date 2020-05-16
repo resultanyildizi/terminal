@@ -71,9 +71,12 @@ function preload() {
   hurt1_sound = loadSound("res/sounds/playerhurt1.wav");
   hurt2_sound = loadSound("res/sounds/playerhurt2.wav");
   blood_flesh_sound = loadSound("res/sounds/blood_flesh.wav");
-  theme_sound = loadSound("res/sounds/theme.wav");
   // JSON
   IDjson = loadJSON("res/levels/id.json");
+}
+
+function loaded() {
+  theme_sound.loop();
 }
 
 let resources = [];
