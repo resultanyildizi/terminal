@@ -79,7 +79,6 @@ class Bullet {
         ) {
           this.done = true;
           blood_flesh_sound.play(0.2);
-
           if (this.candamage) socket.emit("givedamage", current.id, this.id);
         }
       } else if (this.dir == 1 && this.start_x <= currentLeft) {
@@ -92,7 +91,6 @@ class Bullet {
         ) {
           this.done = true;
           blood_flesh_sound.play(0.2);
-
           if (this.candamage) socket.emit("givedamage", current.id, this.id);
         }
       }
