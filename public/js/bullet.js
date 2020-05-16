@@ -1,4 +1,4 @@
-let bulletDamage = 10;
+let bulletDamage = 5;
 class Bullet {
   constructor(id, x, y, dir) {
     this.id = id;
@@ -77,7 +77,7 @@ class Bullet {
           !current.isDead
         ) {
           this.done = true;
-          if (current.health <= bulletDamage / game.players.length) {
+          if (current.health <= 10) {
             game.player.getScore(this.id);
           }
           socket.emit("givedamage", current.id);

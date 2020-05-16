@@ -103,7 +103,6 @@ class Player {
       this.die();
     }
     this.collidesPlatforms();
-    this.regenerateHealth();
 
     this.pos = this.rigidBody.pos;
   }
@@ -213,15 +212,9 @@ class Player {
     }
   }
 
-  regenerateHealth() {
-    if (this.health < 100.0 && !this.isDead) {
-      this.health += 0.01;
-    }
-  }
-
   getDamage() {
     if (this.health > 0) {
-      this.health -= bulletDamage / game.players.length;
+      this.health -= bulletDamage;
     }
     if (this.health <= 0) {
       this.isDead = true;
