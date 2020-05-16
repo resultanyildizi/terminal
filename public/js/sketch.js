@@ -8,10 +8,10 @@ let gameStat;
 
 function setup() {
   loadingText.style("display", "none");
+  theme_sound.loop(0.5);
   // Create a socket to local port 3000
   socket = io.connect();
   // Loop the game music
-  theme_sound.loop(0.5);
   // receive game stat
   socket.on("receiveGameState", function (stat) {
     gameStat = stat;
