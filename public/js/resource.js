@@ -24,6 +24,15 @@ let muzzleFlash;
 let platformSprite1;
 let platformSprite2;
 
+// Sounds
+let jump_sound;
+let shot_sound;
+let hurt1_sound;
+let hurt2_sound;
+let blood_flesh_sound;
+let countdown_sound;
+let theme_sound;
+
 let IDjson;
 
 // preload is a reserved function to upload the resources for the project, in advance.
@@ -49,12 +58,21 @@ function preload() {
     currDatas.push(spriteData);
   }
 
+  // Some sprites
   currShadow = loadImage("res/extras/Shadow.png");
   muzzleFlashR = loadImage("res/extras/MuzzleFlashR.png");
   muzzleFlashL = loadImage("res/extras/MuzzleFlashL.png");
   platformSprite1 = loadImage("res/extras/Platform.png");
   platformSprite2 = loadImage("res/extras/Platform2.png");
 
+  // Sounds
+  jump_sound = loadSound("res/sounds/jump.wav");
+  shot_sound = loadSound("res/sounds/shot.wav");
+  hurt1_sound = loadSound("res/sounds/playerhurt1.wav");
+  hurt2_sound = loadSound("res/sounds/playerhurt2.wav");
+  blood_flesh_sound = loadSound("res/sounds/blood_flesh.wav");
+  theme_sound = loadSound("res/sounds/theme.wav");
+  // JSON
   IDjson = loadJSON("res/levels/id.json");
 }
 

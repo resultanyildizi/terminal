@@ -1,6 +1,7 @@
 let bulletDamage = 10;
 class Bullet {
   constructor(id, x, y, dir) {
+    shot_sound.play(0.3);
     this.id = id;
     this.speed = 50;
     this.dir = dir;
@@ -78,6 +79,7 @@ class Bullet {
           if (current.health <= bulletDamage) game.player.getScore(this.id);
           socket.emit("givedamage", current.id);
           console.log("came");
+          blood_flesh_sound.play(0.2);
         }
       } else if (this.dir == 1 && this.start_x <= currentLeft) {
         if (
@@ -91,6 +93,7 @@ class Bullet {
           if (current.health <= bulletDamage) game.player.getScore(this.id);
           socket.emit("givedamage", current.id);
           console.log("came");
+          blood_flesh_sound.play(0.2);
         }
       }
     }

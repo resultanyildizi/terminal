@@ -26,7 +26,6 @@ class Player {
     this.shootingDelay = 5;
     this.respawnTime = 300.0;
     this.finished = false;
-    
   }
 
   setup() {
@@ -171,6 +170,7 @@ class Player {
   }
 
   jump() {
+    // jump_sound.play(0.3);
     let jumpPower = -12.0;
     this.rigidBody.acc.y += jumpPower;
   }
@@ -234,8 +234,7 @@ class Player {
 
   heal(amount) {
     this.health += amount;
-    if(this.health >= 100.0)
-      this.health = 100.0;
+    if (this.health >= 100.0) this.health = 100.0;
   }
 
   respawn() {

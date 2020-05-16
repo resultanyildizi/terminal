@@ -10,10 +10,12 @@ function setup() {
   // Create a socket to local port 3000
   socket = io.connect();
   // receive game stat
-  socket.on("receiveGameState", function(stat) {
+  socket.on("receiveGameState", function (stat) {
     gameStat = stat;
     console.log(gameStat);
   });
+  // Play theme song
+  theme_sound.play();
   // Create the game canvas
   var canvas = createCanvas(1600, 768);
   canvas.parent("sketchHolder");
