@@ -1,4 +1,4 @@
-let gameTime = 180;
+let gameTime = 120;
 let maxPlayer = 2;
 class Game {
   constructor(pname, pcolor) {
@@ -35,24 +35,32 @@ class Game {
   }
 
   findWinner() {
-    let maxScore = this.players[0].score;
-    this.winner.id = this.players[0].id;
-    this.winner.name = this.players[0].name;
-    this.winner.score = this.players[0].score;
-    this.winner.color = this.players[0].color;
+    let other;
 
-    for (let i = 0; i < this.players.length; i++) {
-      let currentPlayer = this.players[i];
-      if (currentPlayer.score > maxScore) {
-        this.winner.id = currentPlayer.id;
-        this.winner.name = currentPlayer.name;
-        this.winner.score = currentPlayer.score;
-        this.winner.color = currentPlayer.color;
-      }
-
-      this.player.finished = true;
-      socket.emit("update", this.player);
+    for (let i = 0; i < game.players.length; i++) {
+      if (game.players[i].id != game.player.id) other = game.players[i];
     }
+
+    console.log(other);
+
+    if (game.player.score > other.score) {
+      this.winner.id = game.player.id;
+      this.winner.color = game.player.color;
+      this.winner.score = game.player.score;
+      this.winner.name = game.player.name;
+    } else if (other.score > game.player.score) {
+      this.winner.id = other.id;
+      this.winner.color = other.color;
+      this.winner.score = other.score;
+      this.winner.name = other.name;
+    } else {
+      this.winner.color = "green";
+      this.winner.score = game.player.score;
+      this.winner.name = game.player.name + "-" + other.name;
+    }
+
+    this.player.finished = true;
+    socket.emit("update", this.player);
   }
 
   draw() {
