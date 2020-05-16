@@ -229,7 +229,7 @@ class Player {
   getScore() {
     if (this.scoreTime <= 0) {
       this.score += 10;
-      this.scoreTime = 20;
+      this.scoreTime = 200;
     }
   }
 
