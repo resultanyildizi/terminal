@@ -48,7 +48,10 @@ function setup() {
   socket.on("shoot", function (bullet) {
     bullet.__proto__ = Bullet.prototype;
 
-    if (bullet.id != socket.id) game.bullets.push(bullet);
+    if (bullet.id != socket.id) {
+      shot_sound.play(0.3);
+      game.bullets.push(bullet);
+    }
   });
 
   socket.on("getdamage", function (id) {

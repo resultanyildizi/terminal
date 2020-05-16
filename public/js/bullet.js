@@ -1,7 +1,6 @@
 let bulletDamage = 10;
 class Bullet {
   constructor(id, x, y, dir) {
-    shot_sound.play(0.3);
     this.id = id;
     this.speed = 50;
     this.dir = dir;
@@ -12,6 +11,7 @@ class Bullet {
     this.done = false;
     this.muzzle = 0;
     this.scalar = random(1.5, 2.0);
+    shot_sound.play(0.3);
   }
 
   move() {
