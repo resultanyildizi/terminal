@@ -1,4 +1,4 @@
-let bulletDamage = 5;
+let bulletDamage = 10;
 class Bullet {
   constructor(id, x, y, dir) {
     this.id = id;
@@ -10,6 +10,7 @@ class Bullet {
     this.pos_y = y;
     this.done = false;
     this.muzzle = 0;
+    this.candamage = true;
     this.scalar = random(1.5, 2.0);
     shot_sound.setVolume(0.6);
     shot_sound.play();
@@ -77,12 +78,12 @@ class Bullet {
           !current.isDead
         ) {
           this.done = true;
-          if (current.health <= 10) {
-            game.player.getScore(this.id);
-          }
-          socket.emit("givedamage", current.id);
-          console.log("came");
           blood_flesh_sound.play(0.2);
+
+          if (current.health <= 10 && this.candamage) {
+            game.player.getScore();
+          }
+          if (this.candamage) socket.emit("givedamage", current.id);
         }
       } else if (this.dir == 1 && this.start_x <= currentLeft) {
         if (
@@ -93,11 +94,12 @@ class Bullet {
           !current.isDead
         ) {
           this.done = true;
-          if (current.health <= bulletDamage) game.player.getScore(this.id);
-          socket.emit("givedamage", current.id);
-          console.log("came");
-          blood_flesh_sound.setVolume(0.6);
-          blood_flesh_sound.play();
+          blood_flesh_sound.play(0.2);
+
+          if (current.health <= 10 && this.candamage) {
+            game.player.getScore();
+          }
+          if (this.candamage) socket.emit("givedamage", current.id);
         }
       }
     }

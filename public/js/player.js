@@ -222,8 +222,8 @@ class Player {
     }
   }
 
-  getScore(id) {
-    if (id == this.id) this.score += 10;
+  getScore() {
+    this.score += 10;
   }
 
   heal(amount) {

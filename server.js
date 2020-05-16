@@ -49,8 +49,7 @@ io.sockets.on(
 
     io.sockets.emit("receiveGameState", gameStat);
 
-    if(players.length <= 0)
-      gameStat = "unknown";
+    if (players.length <= 0) gameStat = "unknown";
 
     socket.on("start", function (data) {
       data.id = socket.id;
@@ -76,8 +75,7 @@ io.sockets.on(
         }
       }
       io.sockets.emit("deleteAnim", socket.id);
-      if(players.length <= 0) 
-        gameStat = "unknown";
+      if (players.length <= 0) gameStat = "unknown";
       console.log("Client has disconnected");
     });
 
@@ -89,9 +87,8 @@ io.sockets.on(
       io.sockets.emit("getdamage", id);
     });
 
-    socket.on("gameStat", function(stat) {
+    socket.on("gameStat", function (stat) {
       gameStat = stat;
     });
-
   }
 );
