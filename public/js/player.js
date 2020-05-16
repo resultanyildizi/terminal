@@ -25,6 +25,7 @@ class Player {
     this.bullet_y = 5;
     this.shootingDelay = 5;
     this.respawnTime = 300.0;
+    this.scoreTime = 0;
     this.finished = false;
   }
 
@@ -105,6 +106,8 @@ class Player {
     this.collidesPlatforms();
 
     this.pos = this.rigidBody.pos;
+    this.scoreTime -= 1;
+    if (this.scoreTime <= -1) this.scoreTime = 0;
   }
 
   keyPressed() {
@@ -148,7 +151,6 @@ class Player {
       this.rigidBody.h = 60;
     }
 
-    this.scoreTime -= 1;
     /*if (keyIsDown(SPACE)) {
       this.die();
       this.currentAnimation = "death";
