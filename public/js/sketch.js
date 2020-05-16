@@ -9,8 +9,8 @@ let gameStat;
 function setup() {
   // Create a socket to local port 3000
   socket = io.connect();
-  // Load the game music
-  theme_sound = loadSound("res/sounds/theme.wav");
+  // Loop the game music
+  theme_sound.loop(0.5);
   // receive game stat
   socket.on("receiveGameState", function (stat) {
     gameStat = stat;

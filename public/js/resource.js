@@ -66,18 +66,15 @@ function preload() {
   platformSprite2 = loadImage("res/extras/Platform2.png");
 
   // Sounds
+  theme_sound = loadSound("res/sounds/theme.wav");
   jump_sound = loadSound("res/sounds/jump.wav");
   shot_sound = loadSound("res/sounds/shot.wav");
-  hurt1_sound = loadSound("res/sounds/playerhurt1.wav");
-  hurt2_sound = loadSound("res/sounds/playerhurt2.wav");
   blood_flesh_sound = loadSound("res/sounds/blood_flesh.wav");
   // JSON
   IDjson = loadJSON("res/levels/id.json");
 }
 
-function loaded() {
-  theme_sound.loop();
-}
+function loaded() {}
 
 let resources = [];
 function loadResources() {
