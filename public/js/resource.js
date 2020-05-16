@@ -37,6 +37,19 @@ let IDjson;
 
 // preload is a reserved function to upload the resources for the project, in advance.
 function preload() {
+  var canvas = createCanvas(1600, 768);
+  canvas.parent("sketchHolder");
+  background(51);
+
+  var loadingText = createDiv("Loading Resources");
+  loadingText.parent("sketchHolder");
+  loadingText.style("text-align", "center");
+  loadingText.style("font-size", "2em");
+  loadingText.style("color", "white");
+  loadingText.style("font-family", "'Century Gothic'");
+  loadingText.size(400, 200);
+  loadingText.position(width / 2 - 200, height / 2 - 50);
+
   for (let i = 0; i < clrArr.length; i++) {
     for (let j = 0; j < typeArr.length; j++) {
       let source =
@@ -72,9 +85,9 @@ function preload() {
   blood_flesh_sound = loadSound("res/sounds/blood_flesh.wav");
   // JSON
   IDjson = loadJSON("res/levels/id.json");
-}
 
-function loaded() {}
+  loadingText.style("display", "none");
+}
 
 let resources = [];
 function loadResources() {
