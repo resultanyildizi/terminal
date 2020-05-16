@@ -1,11 +1,12 @@
 let gameTime = 90;
-let maxPlayer = 3;
+let maxPlayer = 2;
 class Game {
   constructor(pname, pcolor) {
     this.player;
     this.players = [];
     this.bullets = [];
     this.platforms = [];
+    this.healers = [];
     this.levelDesigner;
     this.pname = pname;
     this.pcolor = pcolor;
@@ -30,6 +31,11 @@ class Game {
     this.player = new Player(0, this.pname, 1400, 100, this.pcolor);
     this.player.setup();
     // Send the player data to the other clients
+
+
+
+
+    this.healers.push(new Heal(200, 300));
   }
 
   findWinner() {
@@ -66,10 +72,20 @@ class Game {
       }
     }
 
+
+    // Draw all bullets
     for (let i = 0; i < this.bullets.length; ++i) {
       this.bullets[i].update();
       this.bullets[i].draw();
       if (this.bullets[i].isOut()) this.bullets.splice(i, 1);
+    }
+
+    // Draw all healers
+    for(let i = 0; i < this.healers.length; i++) {
+      this.healers[i].heal();
+      this.healers[i].draw();
+
+      if(this.healers[i].isGone) this.healers.splice(i, 1);
     }
     // Update and draw the current player
     this.player.update();
@@ -110,9 +126,15 @@ class Game {
       this.findWinner();
       gameReady = false;
       lobbyReady = false;
+      socket.emit("gameStat", "unknown");
       gameFinished();
     }
     text(currentTime + "s", width - 40, 40);
+
+    if(game.players.length < 1) {
+      socket.emit("gameStat", "unknown");
+      location.reload();
+    }
     pop();
   }
 }

@@ -4,10 +4,16 @@ let game;
 let gameReady;
 let lobbyReady;
 let gameisFull;
+let gameStat;
 
 function setup() {
   // Create a socket to local port 3000
   socket = io.connect();
+  // receive game stat
+  socket.on("receiveGameState", function(stat) {
+    gameStat = stat;
+    console.log(gameStat);
+  });
   // Create the game canvas
   var canvas = createCanvas(1600, 768);
   canvas.parent("sketchHolder");
@@ -63,11 +69,13 @@ function draw() {
       gameReady = true;
       lobbyReady = false;
       game.timer = millis();
+      socket.emit("gameStat", "started");
     }
   }
 
   if (gameReady) {
     game.draw();
     socket.emit("update", game.player);
+    socket.emit("gameTime", game.currentTime);
   }
 }

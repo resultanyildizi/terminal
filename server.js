@@ -9,7 +9,7 @@
 var players = [];
 var bullets = [];
 
-var alreadySent = false;
+var gameStat = "unknown";
 
 // Using express: http://expressjs.com/
 var express = require("express");
@@ -47,6 +47,11 @@ io.sockets.on(
   function (socket) {
     console.log("We have a new client: " + socket.id);
 
+    io.sockets.emit("receiveGameState", gameStat);
+
+    if(players.length <= 0)
+      gameStat = "unknown";
+
     socket.on("start", function (data) {
       data.id = socket.id;
       players.push(data);
@@ -71,6 +76,8 @@ io.sockets.on(
         }
       }
       io.sockets.emit("deleteAnim", socket.id);
+      if(players.length <= 0) 
+        gameStat = "unknown";
       console.log("Client has disconnected");
     });
 
@@ -81,5 +88,10 @@ io.sockets.on(
     socket.on("givedamage", function (id) {
       io.sockets.emit("getdamage", id);
     });
+
+    socket.on("gameStat", function(stat) {
+      gameStat = stat;
+    });
+
   }
 );

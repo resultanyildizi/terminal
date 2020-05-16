@@ -12,7 +12,7 @@ class Player {
     this.speed = 7;
     this.direction = 1;
 
-    this.health = 100.0;
+    this.health = 20.0;
     this.armor = 0.0;
 
     this.currentAnimation = "idle";
@@ -26,6 +26,7 @@ class Player {
     this.shootingDelay = 5;
     this.respawnTime = 300.0;
     this.finished = false;
+    
   }
 
   setup() {
@@ -229,6 +230,12 @@ class Player {
 
   getScore(id) {
     if (id == this.id) this.score += 10;
+  }
+
+  heal(amount) {
+    this.health += amount;
+    if(this.health >= 100.0)
+      this.health = 100.0;
   }
 
   respawn() {
