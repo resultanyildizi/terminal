@@ -124,7 +124,7 @@ class Game {
     textSize(24);
     let currentTime = floor(gameTime - (millis() - this.timer) / 1000);
 
-    if (currentTime % 5 == 0 && currentTime != this.prevTime) {
+    if (currentTime % 10 == 0 && currentTime != this.prevTime) {
       this.healer = new Heal();
       this.prevTime = currentTime;
     }
