@@ -13,7 +13,8 @@ let _index = 0;
 
 class Heal {
   constructor() {
-    let randomPoint = spawnPoints[_index++ % 8];
+    _index++;
+    let randomPoint = spawnPoints[_index % 8];
     this.x = randomPoint.x;
     this.y = randomPoint.y;
     this.amount = 20.0;
