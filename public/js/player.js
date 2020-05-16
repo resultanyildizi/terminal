@@ -148,6 +148,7 @@ class Player {
       this.rigidBody.h = 60;
     }
 
+    this.scoreTime -= 1;
     /*if (keyIsDown(SPACE)) {
       this.die();
       this.currentAnimation = "death";
@@ -224,7 +225,10 @@ class Player {
   }
 
   getScore() {
-    this.score += 10;
+    if (this.scoreTime <= 0) {
+      this.score += 10;
+      this.scoreTime = 20;
+    }
   }
 
   heal(amount) {
