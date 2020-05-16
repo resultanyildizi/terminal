@@ -80,7 +80,7 @@ function preload() {
 
   loadingText.value("Loading Sounds...");
   // Sounds
-  theme_sound = loadSound("res/sounds/theme.wav");
+  // theme_sound = loadSound("res/sounds/theme.wav");
   jump_sound = loadSound("res/sounds/jump.wav");
   shot_sound = loadSound("res/sounds/shot.wav");
   blood_flesh_sound = loadSound("res/sounds/blood_flesh.wav");

@@ -8,8 +8,8 @@ let gameStat;
 
 function setup() {
   loadingText.style("display", "none");
-  theme_sound.setVolume(0.8);
-  theme_sound.loop();
+  //theme_sound.setVolume(0.8);
+  // theme_sound.loop();
   // Create a socket to local port 3000
   socket = io.connect();
   // Loop the game music
