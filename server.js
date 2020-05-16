@@ -83,12 +83,16 @@ io.sockets.on(
       io.sockets.emit("shoot", bullet);
     });
 
-    socket.on("givedamage", function (id) {
-      io.sockets.emit("getdamage", id);
+    socket.on("givedamage", function (playerid, bulletid) {
+      io.sockets.emit("getdamage", playerid, bulletid);
     });
 
     socket.on("gameStat", function (stat) {
       gameStat = stat;
+    });
+
+    socket.on("pushScore", function (id) {
+      io.sockets.emit("popScore", id);
     });
   }
 );

@@ -56,10 +56,14 @@ function setup() {
     }
   });
 
-  socket.on("getdamage", function (id) {
-    if (id == socket.id) {
-      game.player.getDamage(game.players.length);
+  socket.on("getdamage", function (playerid, bulletid) {
+    if (playerid == socket.id) {
+      game.player.getDamage(bulletid);
     }
+  });
+
+  socket.on("popScore", function (id) {
+    if (id == socket.id) game.player.getScore();
   });
 }
 

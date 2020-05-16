@@ -212,11 +212,12 @@ class Player {
     }
   }
 
-  getDamage() {
+  getDamage(bulletid) {
     if (this.health > 0) {
       this.health -= bulletDamage;
     }
     if (this.health <= 0) {
+      socket.emit("pushScore", bulletid);
       this.isDead = true;
       this.health = 0;
     }

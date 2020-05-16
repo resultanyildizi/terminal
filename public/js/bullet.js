@@ -80,10 +80,7 @@ class Bullet {
           this.done = true;
           blood_flesh_sound.play(0.2);
 
-          if (current.health <= 10 && this.candamage) {
-            game.player.getScore();
-          }
-          if (this.candamage) socket.emit("givedamage", current.id);
+          if (this.candamage) socket.emit("givedamage", current.id, this.id);
         }
       } else if (this.dir == 1 && this.start_x <= currentLeft) {
         if (
