@@ -53,7 +53,11 @@ function MainMenuUI() {
         console.log(globalData[i].finished);
         hasFinished |= globalData[i].finished;
       }
-      if (globalData.length >= maxPlayer || hasFinished) {
+      if (
+        globalData.length >= maxPlayer ||
+        hasFinished ||
+        gameStat == "started"
+      ) {
         gameisFull = true;
         lobbyReady = false;
         gameReady = false;
