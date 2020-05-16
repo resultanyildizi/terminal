@@ -77,7 +77,9 @@ class Bullet {
           !current.isDead
         ) {
           this.done = true;
-          if (current.health <= bulletDamage) game.player.getScore(this.id);
+          if (current.health <= bulletDamage / game.players.length) {
+            game.player.getScore(this.id);
+          }
           socket.emit("givedamage", current.id);
           console.log("came");
           blood_flesh_sound.play(0.2);
