@@ -12,7 +12,7 @@ class Player {
     this.speed = 7;
     this.direction = 1;
 
-    this.health = 20.0;
+    this.health = 100.0;
     this.armor = 0.0;
 
     this.currentAnimation = "idle";
