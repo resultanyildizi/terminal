@@ -143,3 +143,14 @@ canvas {
   cursor: pointer;
   outline: none;
 }
+
+#restart-button {
+  font-size: 1.2em;
+  font-family: "Times New Roman", Times, serif;
+  cursor: pointer;
+  border: 1px solid white;
+  color: white;
+  border-radius: 10px;
+  background-color: transparent;
+  outline-style: none;
+}

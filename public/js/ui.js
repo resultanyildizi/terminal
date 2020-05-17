@@ -153,6 +153,15 @@ function gameFinished() {
     width / 2,
     height / 2
   );
+
+  let restart = createButton("Play Again");
+  restart.parent("sketchHolder");
+  restart.size(150, 30);
+  restart.id("restart-button");
+  restart.position(width / 2 - 75, height / 2 + 150);
+  restart.mousePressed(function () {
+    location.reload();
+  });
   pop();
   noLoop();
 }
