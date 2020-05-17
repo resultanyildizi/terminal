@@ -1,5 +1,5 @@
 let gameTime = 120;
-let maxPlayer = 4;
+let maxPlayer = 2;
 class Game {
   constructor(pname, pcolor) {
     this.player;
